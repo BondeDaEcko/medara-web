@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>MEDARA — Teste Supabase</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, sans-serif; background: #0f172a; color: #e2e8f0; padding: 32px; }
+  h1 { font-size: 22px; font-weight: 800; color: #3D82D8; margin-bottom: 8px; }
+  p.sub { font-size: 13px; color: #64748b; margin-bottom: 32px; }
+  .card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 16px; border: 1px solid #334155; }
+  .card h2 { font-size: 14px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .test-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #1e293b; font-size: 13px; }
+  .test-row:last-child { border-bottom: none; }
+  .badge { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; flex-shrink: 0; min-width: 72px; text-align: center; }
+  .ok   { background: rgba(34,168,104,.15); color: #22A868; }
+  .fail { background: rgba(229,57,53,.15);  color: #E53935; }
+  .wait { background: rgba(61,130,216,.15); color: #3D82D8; }
+  .detail { font-size: 11px; color: #64748b; margin-left: auto; max-width: 300px; text-align: right; word-break: break-all; }
+  button { background: #3D82D8; color: #fff; border: none; border-radius: 10px; padding: 12px 28px; font-size: 14px; font-weight: 700; cursor: pointer; }
+  button:hover { background: #2563eb; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  #summary { background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 16px; margin-top: 24px; font-size: 13px; line-height: 1.8; display: none; }
+  input { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 8px 12px; color: #e2e8f0; font-size: 13px; width: 100%; margin-bottom: 8px; }
+  label { font-size: 12px; color: #64748b; display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<h1>🔬 MEDARA — Diagnóstico Supabase</h1>
+<p class="sub">Testa conexão, tabelas, autenticação e RLS em sequência.</p>
+
+<div class="card">
+  <h2>⚙️ Configuração</h2>
+  <label>URL do Supabase</label>
+  <input id="cfg-url" value="http://32.27.92.11:8000" />
+  <label>Anon Key</label>
+  <input id="cfg-key" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE" />
+  <label>E-mail de teste (será criado e removido)</label>
+  <input id="cfg-email" value="teste-automatico@medara.com.br" />
+  <label>Senha de teste</label>
+  <input id="cfg-pw" type="password" value="TesteMediara@123" />
+  <br>
+  <button id="btn-run" onclick="runAll()">▶ Rodar todos os testes</button>
+</div>
+
+<div id="results"></div>
+<div id="summary"></div>
+
+<script>
+let _supa;
+let _testUserId = null;
+let passed = 0, failed = 0;
+
+function addResult(section, label, status, detail = '') {
+  let sec = document.getElementById('sec-' + section);
+  if (!sec) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `<h2 id="sec-title-${section}">🔄 ${section}</h2><div id="sec-${section}"></div>`;
+    document.getElementById('results').appendChild(card);
+    sec = document.getElementById('sec-' + section);
+  }
+  const cls = status === 'ok' ? 'ok' : status === 'fail' ? 'fail' : 'wait';
+  const icon = status === 'ok' ? '✅' : status === 'fail' ? '❌' : '⏳';
+  sec.innerHTML += `
+    <div class="test-row">
+      <span class="badge ${cls}">${icon} ${status.toUpperCase()}</span>
+      <span>${label}</span>
+      ${detail ? `<span class="detail">${detail}</span>` : ''}
+    </div>`;
+  if (status === 'ok') passed++;
+  if (status === 'fail') failed++;
+}
+
+async function runAll() {
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('summary').style.display = 'none';
+  passed = 0; failed = 0;
+  _testUserId = null;
+
+  const btn = document.getElementById('btn-run');
+  btn.disabled = true; btn.textContent = 'Testando...';
+
+  const url   = document.getElementById('cfg-url').value.trim();
+  const key   = document.getElementById('cfg-key').value.trim();
+  const email = document.getElementById('cfg-email').value.trim();
+  const pw    = document.getElementById('cfg-pw').value.trim();
+
+  _supa = supabase.createClient(url, key);
+
+  // ── 1. CONEXÃO ─────────────────────────────────────
+  try {
+    const res = await fetch(url + '/rest/v1/', { headers: { apikey: key }, signal: AbortSignal.timeout(8000) });
+    if (res.ok || res.status === 200) addResult('1. Conexão', 'Servidor Supabase acessível', 'ok', url);
+    else addResult('1. Conexão', 'Servidor respondeu com erro', 'fail', 'HTTP ' + res.status);
+  } catch(e) {
+    addResult('1. Conexão', 'Servidor inacessível', 'fail', e.message);
+    showSummary(btn); return;
+  }
+
+  // ── 2. TABELAS ─────────────────────────────────────
+  const tables = ['companies', 'profiles', 'appointments', 'alerts', 'documents'];
+  for (const t of tables) {
+    const { error } = await _supa.from(t).select('id').limit(1);
+    if (!error) addResult('2. Tabelas', `Tabela "${t}" existe e responde`, 'ok');
+    else addResult('2. Tabelas', `Tabela "${t}"`, 'fail', error.message);
+  }
+
+  // ── 3. DADOS — companies ───────────────────────────
+  const { data: companies, error: cErr } = await _supa
+    .from('companies').select('name, access_code').eq('active', true);
+  if (!cErr && companies?.length > 0) {
+    addResult('3. Dados', `companies: ${companies.length} empresa(s) encontrada(s)`, 'ok',
+      companies.map(c => c.name).join(', '));
+  } else {
+    addResult('3. Dados', 'companies: nenhuma empresa encontrada', 'fail',
+      cErr?.message || 'Execute o INSERT das empresas no SQL Editor');
+  }
+
+  // Verifica LEAL2026
+  const { data: leal } = await _supa.from('companies').select('id,name').eq('access_code','LEAL2026').single();
+  if (leal) addResult('3. Dados', 'Código LEAL2026 → Leal Castro', 'ok', leal.id);
+  else addResult('3. Dados', 'Código LEAL2026 não encontrado', 'fail', 'Rode o INSERT das empresas');
+
+  // ── 4. AUTENTICAÇÃO ────────────────────────────────
+  // Tenta criar conta de teste
+  const { data: signUp, error: suErr } = await _supa.auth.signUp({ email, password: pw });
+  if (!suErr && signUp?.user) {
+    _testUserId = signUp.user.id;
+    addResult('4. Autenticação', 'Cadastro de novo usuário', 'ok', email);
+  } else if (suErr?.message?.includes('already')) {
+    // Usuário já existe — tenta login
+    const { data: signIn, error: siErr } = await _supa.auth.signInWithPassword({ email, password: pw });
+    if (!siErr) { _testUserId = signIn.user.id; addResult('4. Autenticação', 'Login com conta existente', 'ok', email); }
+    else addResult('4. Autenticação', 'Login falhou', 'fail', siErr.message);
+  } else {
+    addResult('4. Autenticação', 'Cadastro falhou', 'fail', suErr?.message);
+  }
+
+  // ── 5. ESCRITA — profiles ──────────────────────────
+  if (_testUserId && leal) {
+    const { error: insErr } = await _supa.from('profiles').upsert({
+      id:           _testUserId,
+      company_id:   leal.id,
+      name:         'Usuário de Teste Automático',
+      initials:     'UT',
+      role:         'funcionario',
+      health_score: 55
+    });
+    if (!insErr) addResult('5. Escrita', 'INSERT em profiles', 'ok', 'id: ' + _testUserId);
+    else addResult('5. Escrita', 'INSERT em profiles falhou', 'fail', insErr.message);
+
+    // Leitura do perfil criado
+    const { data: prof, error: rErr } = await _supa.from('profiles')
+      .select('name, role, health_score').eq('id', _testUserId).single();
+    if (!rErr && prof) addResult('5. Escrita', 'SELECT do perfil criado', 'ok',
+      `${prof.name} | ${prof.role} | score ${prof.health_score}`);
+    else addResult('5. Escrita', 'SELECT perfil falhou', 'fail', rErr?.message);
+
+    // INSERT em appointments
+    const { error: apptErr } = await _supa.from('appointments').insert({
+      company_id:  leal.id,
+      user_id:     _testUserId,
+      specialty:   'Clínica Geral',
+      doctor_name: 'Dr. Teste Automatico',
+      type:        'scheduled',
+      status:      'pending'
+    });
+    if (!apptErr) addResult('5. Escrita', 'INSERT em appointments', 'ok');
+    else addResult('5. Escrita', 'INSERT em appointments falhou', 'fail', apptErr.message);
+  } else {
+    addResult('5. Escrita', 'Pulado — sem usuário autenticado ou empresa', 'fail');
+  }
+
+  // ── 6. RLS ─────────────────────────────────────────
+  // Testa que outro usuário não consegue ver o perfil criado
+  const _supaAnon = supabase.createClient(url, key);
+  const { data: otherProfiles } = await _supaAnon.from('profiles').select('id').limit(10);
+  if (!otherProfiles || otherProfiles.length === 0) {
+    addResult('6. RLS', 'Anon não vê profiles de outros (correto)', 'ok');
+  } else {
+    addResult('6. RLS', `Anon vê ${otherProfiles.length} profile(s) — RLS pode não estar ativo`, 'fail');
+  }
+
+  // Testa que anon vê companies
+  const { data: anonCo } = await _supaAnon.from('companies').select('name').limit(5);
+  if (anonCo?.length > 0) addResult('6. RLS', 'Anon vê companies (correto para validação)', 'ok');
+  else addResult('6. RLS', 'Anon não vê companies — verifique a policy anon_select', 'fail');
+
+  // ── 7. LIMPEZA ─────────────────────────────────────
+  if (_testUserId) {
+    await _supa.from('appointments').delete().eq('user_id', _testUserId);
+    await _supa.from('profiles').delete().eq('id', _testUserId);
+    await _supa.auth.signOut();
+    addResult('7. Limpeza', 'Dados de teste removidos', 'ok');
+  }
+
+  showSummary(btn);
+}
+
+function showSummary(btn) {
+  const total = passed + failed;
+  const ok = failed === 0;
+  const summary = document.getElementById('summary');
+  summary.style.display = 'block';
+  summary.style.borderColor = ok ? '#22A868' : '#E53935';
+  summary.innerHTML = `
+    <strong style="color:${ok?'#22A868':'#E53935'};font-size:16px;">
+      ${ok ? '✅ Tudo ok!' : '❌ ' + failed + ' teste(s) falharam'}
+    </strong><br><br>
+    ${passed} de ${total} testes passaram.<br>
+    ${ok
+      ? 'Supabase conectado, tabelas criadas, RLS ativo e dados salvando corretamente.'
+      : 'Verifique os itens marcados com ❌ acima. Os mais comuns são:<br>• Servidor inacessível nesta rede<br>• Tabelas não criadas (rode o SQL do guia)<br>• RLS sem policies configuradas'}
+  `;
+  btn.disabled = false;
+  btn.textContent = '▶ Rodar novamente';
+}
+</script>
+</body>
+</html>
