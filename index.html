@@ -33,6 +33,10 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"
   integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw"
   crossorigin="anonymous"></script>
+<!-- Supabase JS client -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"
+  integrity="sha384-+exuGmToMCgcfiTDu+P+1aCmlH2Mis7lstkjVmVHdwvJqtNNqhxMreqsIe6bVstn"
+  crossorigin="anonymous"></script>
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -5132,7 +5136,24 @@ function runSplash(){
   }, 1700);
 
   // 4 — checa sessão salva; entra direto ou vai para login (3100ms)
-  setTimeout(()=>{
+  setTimeout(async ()=>{
+    try {
+      // Verifica sessão ativa no Supabase
+      const { data: { session } } = await _supa.auth.getSession();
+      if (session?.user) {
+        const { data: profile } = await _supa
+          .from('profiles')
+          .select('*, companies(name)')
+          .eq('id', session.user.id)
+          .single();
+        if (profile) {
+          _startSession(_profileToUser(profile, profile.companies?.name), session.user.email);
+          return;
+        }
+      }
+    } catch(_) { /* Supabase indisponível */ }
+
+    // Fallback: sessionStorage local
     try {
       const saved = JSON.parse(sessionStorage.getItem('medara_session'));
       if(saved && saved.user && saved.email) {
@@ -5215,6 +5236,22 @@ const TEST_USERS = {
 };
 let loggedUser = null;
 
+// ── SUPABASE CLIENT ───────────────────────────────
+const _SUPA_URL = 'http://32.27.92.11:8000';
+const _SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE';
+const _supa = supabase.createClient(_SUPA_URL, _SUPA_KEY);
+
+// Converte profile do banco → objeto de usuário do app
+function _profileToUser(profile, companyName) {
+  return {
+    name:    profile.name,
+    initials: profile.initials,
+    role:    profile.role,
+    company: companyName || profile.company_name || '',
+    score:   profile.health_score || 70
+  };
+}
+
 function applyUser(u){
   // Header da home
   const greet = document.querySelector('#s-home .scroll-area')?.previousElementSibling;
@@ -5271,15 +5308,17 @@ function quickLogin(role) {
 // Rate limiting para login — máx 5 tentativas, bloqueio de 15 min
 const _rl = { a: 0, u: 0 };
 
-function doLogin(){
+async function doLogin(){
   const errBox = document.getElementById('login-err');
   const errTxt = document.getElementById('login-err-txt');
+  const btn    = document.getElementById('login-btn');
 
   function showErr(msg, field, isAuthFail){
     errTxt.textContent = msg;
     errBox.style.display = 'flex';
     if(field){ field.style.borderColor='var(--danger)'; setTimeout(()=>field.style.borderColor='',2000); }
     if(isAuthFail){ _rl.a++; if(_rl.a >= 5){ _rl.u = Date.now() + 900000; _rl.a = 0; } }
+    if(btn){ btn.disabled = false; btn.textContent = btn._origText || 'Entrar'; }
   }
 
   // Verificação de bloqueio por tentativas excessivas
@@ -5297,11 +5336,35 @@ function doLogin(){
   if(!codigo) { showErr('Informe o código da empresa.', document.getElementById('login-codigo')); return; }
   if(!COMPANY_CODES[codigo]) { showErr('Código da empresa inválido.', document.getElementById('login-codigo'), true); return; }
 
+  // Loading state
+  if(btn){ btn._origText = btn.textContent; btn.disabled = true; btn.textContent = 'Entrando...'; }
+
+  // ── 1. Tenta autenticação via Supabase ────────────
+  try {
+    const { data: authData, error: authErr } = await _supa.auth.signInWithPassword({ email, password: pw });
+
+    if (!authErr && authData?.user) {
+      const { data: profile } = await _supa
+        .from('profiles')
+        .select('*, companies(name)')
+        .eq('id', authData.user.id)
+        .single();
+
+      if (profile) {
+        errBox.style.display = 'none';
+        _rl.a = 0; _rl.u = 0;
+        if(btn){ btn.disabled = false; btn.textContent = btn._origText; }
+        _startSession(_profileToUser(profile, profile.companies?.name), email);
+        return;
+      }
+    }
+  } catch(_) { /* Supabase indisponível — usa fallback */ }
+
+  // ── 2. Fallback: TEST_USERS (remover após migração) ──
   const _localUsers = JSON.parse(localStorage.getItem('medara_users') || '{}');
   const user = TEST_USERS[email] || _localUsers[email];
   if(!user) { showErr('E-mail não encontrado. Verifique e tente novamente.', document.getElementById('login-email'), true); return; }
 
-  // Verificação de senha — sem bypass para pw:null
   if(!user.pw || user.pw !== pw){
     showErr('Senha incorreta. Tente novamente.', document.getElementById('login-password'), true);
     return;
@@ -5309,6 +5372,7 @@ function doLogin(){
 
   errBox.style.display = 'none';
   _rl.a = 0; _rl.u = 0;
+  if(btn){ btn.disabled = false; btn.textContent = btn._origText; }
   _startSession(user, email);
 }
 
@@ -5837,7 +5901,7 @@ function paReset(){
   _paSession = null;
 }
 
-function paCriarConta(){
+async function paCriarConta(){
   const senha  = document.getElementById('pa-senha').value;
   const senha2 = document.getElementById('pa-senha2').value;
   const lgpd   = document.getElementById('pa-lgpd').checked;
@@ -5853,30 +5917,54 @@ function paCriarConta(){
   const codigo = document.getElementById('pa-codigo').value.trim().toUpperCase();
   const initials = nome.split(' ').filter(Boolean).map(p => p[0]).join('').slice(0,2).toUpperCase();
 
-  const newUser = {
-    pw: senha,
-    name: nome,
-    initials: initials,
-    role: 'funcionario',
-    company: COMPANY_CODES[codigo],
-    score: 72
+  const sessionUser = {
+    name: nome, initials, role: 'funcionario',
+    company: COMPANY_CODES[codigo], score: 72
   };
 
-  // Persiste no localStorage para logins futuros
-  const stored = JSON.parse(localStorage.getItem('medara_users') || '{}');
-  stored[email] = newUser;
-  localStorage.setItem('medara_users', JSON.stringify(stored));
+  // ── Tenta criar conta no Supabase ─────────────────
+  try {
+    const { data: authData, error: signUpErr } = await _supa.auth.signUp({ email, password: senha });
+
+    if (signUpErr) {
+      const msg = signUpErr.message?.includes('already') ? 'E-mail já cadastrado. Faça login.' : 'Erro ao criar conta. Tente novamente.';
+      err.textContent = msg; err.style.display = 'block'; return;
+    }
+
+    if (authData?.user) {
+      // Busca o company_id pelo access_code
+      const { data: company } = await _supa.from('companies')
+        .select('id').eq('access_code', codigo).single();
+
+      if (company) {
+        await _supa.from('profiles').insert({
+          id:           authData.user.id,
+          company_id:   company.id,
+          name:         nome,
+          initials:     initials,
+          role:         'funcionario',
+          health_score: 72
+        });
+      }
+    }
+  } catch(_) {
+    // Supabase indisponível: persiste localmente como fallback
+    const stored = JSON.parse(localStorage.getItem('medara_users') || '{}');
+    stored[email] = { pw: senha, ...sessionUser };
+    localStorage.setItem('medara_users', JSON.stringify(stored));
+  }
 
   // Mostra tela de sucesso e entra automaticamente após 2s
   document.getElementById('pa-step2').style.display='none';
   document.getElementById('pa-success').style.display='block';
-  _paSession = { user: newUser, email };
-  setTimeout(() => _startSession(newUser, email), 2000);
+  _paSession = { user: sessionUser, email };
+  setTimeout(() => _startSession(sessionUser, email), 2000);
 }
 
 let _paSession = null;
 
-function doLogout() {
+async function doLogout() {
+  try { await _supa.auth.signOut(); } catch(_) {}
   sessionStorage.removeItem('medara_session');
   loggedUser = null;
   // Reseta charts para reinicializar no próximo login
