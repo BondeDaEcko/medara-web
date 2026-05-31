@@ -17,12 +17,22 @@
 <link rel="apple-touch-icon" sizes="128x128" href="/icons/icon-128.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-96.png">
 <!-- Agora.io SDK — videochamadas WebRTC -->
-<script src="https://download.agora.io/sdk/release/AgoraRTC_N-4.20.0.js"></script>
+<script src="https://download.agora.io/sdk/release/AgoraRTC_N-4.20.0.js"
+  integrity="sha384-vvrWy30L5pS73SZopHhspS3Yc/PyQmG0V80Br7kCOURjTCM5ML0lZ/eKC/2GJxgh"
+  crossorigin="anonymous"></script>
 <!-- jsPDF — geração de PDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+  integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk"
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"
+  integrity="sha384-fCAW/rDWORTbQXSiB7mOg0QtQ5c+r0f544y6XoKjuVva0nMBlCpNUjiFeG5iMdS3"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"
+  integrity="sha384-e6nUZLBkQ86NJ6TVVKAeSaK8jWa3NhkYWZFomE39AvDbQWeie9PlQqM3pmYW5d1g"
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"
+  integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw"
+  crossorigin="anonymous"></script>
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -5124,12 +5134,12 @@ function runSplash(){
   // 4 — checa sessão salva; entra direto ou vai para login (3100ms)
   setTimeout(()=>{
     try {
-      const saved = JSON.parse(localStorage.getItem('medara_session'));
+      const saved = JSON.parse(sessionStorage.getItem('medara_session'));
       if(saved && saved.user && saved.email) {
         _startSession(saved.user, saved.email);
         return;
       }
-    } catch(e) { localStorage.removeItem('medara_session'); }
+    } catch(e) { sessionStorage.removeItem('medara_session'); }
     goTo('s-login');
   }, 3100);
 }
@@ -5304,9 +5314,9 @@ function doLogin(){
 
 function _startSession(user, email) {
   loggedUser = user;
-  // Salva sessão sem a senha — jamais persistir credenciais
+  // Sessão em sessionStorage — limpa ao fechar o navegador, nunca inclui senha
   const { pw: _omit, ...safeUser } = Object.assign({}, user);
-  localStorage.setItem('medara_session', JSON.stringify({ user: safeUser, email }));
+  sessionStorage.setItem('medara_session', JSON.stringify({ user: safeUser, email }));
   const firstName = user.name.split(' ')[0];
   document.querySelectorAll('.home-user-first').forEach(el => el.textContent = firstName);
   document.querySelectorAll('.home-user-initials').forEach(el => el.textContent = user.initials);
@@ -5867,7 +5877,7 @@ function paCriarConta(){
 let _paSession = null;
 
 function doLogout() {
-  localStorage.removeItem('medara_session');
+  sessionStorage.removeItem('medara_session');
   loggedUser = null;
   // Reseta charts para reinicializar no próximo login
   Object.keys(_charts).forEach(k => { try { _charts[k].destroy(); } catch(e){} delete _charts[k]; });
