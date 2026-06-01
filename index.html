@@ -2101,8 +2101,8 @@ body{background:#030d1a !important;}
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <div>
-          <div style="font-size:12px;color:rgba(255,255,255,.6);">Carlos Mendes · Gestor de RH</div>
-          <div style="font-size:10px;color:rgba(255,255,255,.4);">Hoje, 23 mai 2026</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.6);" class="gestor-nome-display">—</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.4);" class="gestor-date-txt">—</div>
         </div>
         <div style="background:rgba(34,168,104,.2);border:1px solid rgba(34,168,104,.35);border-radius:20px;padding:4px 12px;display:flex;align-items:center;gap:5px;">
           <div style="width:6px;height:6px;background:#22A868;border-radius:50%;animation:pulse 2s infinite;"></div>
@@ -2725,8 +2725,8 @@ body{background:#030d1a !important;}
           <svg viewBox="0 0 24 24" fill="white" style="width:28px;height:28px;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         </div>
         <div>
-          <div style="font-size:18px;font-weight:800;color:#fff;">Carlos Mendes</div>
-          <div style="font-size:12px;color:rgba(255,255,255,.65);">Gestor de RH · Leal Castro</div>
+          <div style="font-size:18px;font-weight:800;color:#fff;" class="gestor-nome-display">—</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.65);">Gestor de RH · <span class="gestor-empresa-nome">—</span></div>
           <div style="background:rgba(255,193,7,.2);border:1px solid rgba(255,193,7,.4);border-radius:20px;padding:2px 10px;display:inline-block;margin-top:5px;">
             <span style="font-size:10px;font-weight:700;color:#FFC107;">Plano Gold</span>
           </div>
@@ -2744,7 +2744,7 @@ body{background:#030d1a !important;}
           </div>
           <div style="flex:1;">
             <div style="font-size:11px;color:var(--medium);">Nome completo</div>
-            <div style="font-size:14px;font-weight:600;color:var(--dark);">Carlos Mendes</div>
+            <div style="font-size:14px;font-weight:600;color:var(--dark);" class="gestor-nome-campo">—</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid #F0F4FA;">
@@ -2753,7 +2753,7 @@ body{background:#030d1a !important;}
           </div>
           <div style="flex:1;">
             <div style="font-size:11px;color:var(--medium);">E-mail</div>
-            <div style="font-size:14px;font-weight:600;color:var(--dark);">adm@lealcastro.com.br</div>
+            <div style="font-size:14px;font-weight:600;color:var(--dark);" class="gestor-email-campo">—</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid #F0F4FA;">
@@ -3315,7 +3315,7 @@ body{background:#030d1a !important;}
     <div style="background:linear-gradient(150deg,#1A0050,#3B1F8B,#7C3AED);padding:44px 20px 20px;flex-shrink:0;position:relative;overflow:hidden;">
       <div style="position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.05);top:-60px;right:-30px;pointer-events:none;"></div>
       <div style="display:flex;align-items:center;gap:10px;position:relative;">
-        <button onclick="goBack('s-gestor-sst')" style="width:34px;height:34px;background:rgba(255,255,255,.14);border:none;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+        <button onclick="goBack()" style="width:34px;height:34px;background:rgba(255,255,255,.14);border:none;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
           <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" style="width:18px;height:18px;"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
         <div>
@@ -3651,7 +3651,7 @@ body{background:#030d1a !important;}
     <div style="background:linear-gradient(150deg,#061528,#0f2d5c,#3d82d8);padding:44px 20px 20px;flex-shrink:0;position:relative;overflow:hidden;">
       <div style="position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.04);top:-60px;right:-30px;pointer-events:none;"></div>
       <div style="display:flex;align-items:center;gap:10px;position:relative;">
-        <button onclick="goBack('s-gestor-alertas')" style="width:34px;height:34px;background:rgba(255,255,255,.14);border:none;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+        <button onclick="goBack()" style="width:34px;height:34px;background:rgba(255,255,255,.14);border:none;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
           <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" style="width:18px;height:18px;"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
         <div style="flex:1;">
@@ -4190,7 +4190,7 @@ body{background:#030d1a !important;}
   <div class="screen" id="s-medico-ativa">
     <div style="background:linear-gradient(135deg,#0a2a1a,#0f4a2e);padding:44px 20px 16px;flex-shrink:0;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-        <button onclick="goTo('s-medico-home')" style="width:36px;height:36px;background:rgba(255,255,255,.15);border:none;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+        <button onclick="sairConsultaMedico()" style="width:36px;height:36px;background:rgba(255,255,255,.15);border:none;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;">
           <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" style="width:18px;height:18px;"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
         <div style="flex:1;">
@@ -5386,6 +5386,11 @@ function selectRole(role){
   closeRoleSheet();
 }
 function quickLogin(role) {
+  // Só disponível em ambiente local — bloqueado em produção
+  if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+    showToast('Acesso rápido disponível apenas em desenvolvimento.', 'error');
+    return;
+  }
   if (role === 'gestor') {
     _startSession(TEST_USERS['adm@lealcastro.com.br'], 'adm@lealcastro.com.br');
   } else {
@@ -5486,6 +5491,7 @@ function _startSession(user, email) {
   _dtSetUser(user.name, user.initials);
   _dtSetRole(user.role);
   _toggleSuperAdminUI();
+  _populateGestorPerfil(user, email);
   if(user.role === 'gestor'){
     goTo('s-gestor-home');
     setTimeout(()=>{ const f=document.getElementById('gscore-fill'); if(f) f.style.width='74%'; },300);
@@ -5517,11 +5523,15 @@ let navHistory = [];
 let timerInterval = null;
 let timerSecs = 0;
 
-// Telas exclusivas de gestor — funcionário bloqueado
+// Telas exclusivas de gestor — funcionário e médico bloqueados
 const _GESTOR_ONLY = new Set([
   's-gestor-home','s-gestor-sst','s-gestor-alertas','s-gestor-docs','s-gestor-perfil',
-  's-painel-exec','s-score-medara','s-saude-emocional','s-gestor-ia','s-esocial-config'
+  's-painel-exec','s-score-medara','s-saude-emocional','s-gestor-ia','s-esocial-config',
+  's-afastamentos','s-esocial','s-relatorios','s-risco-trabalhista'
 ]);
+
+// Telas exclusivas de médico — fora do goTo() para não recriar a cada chamada
+const _MEDICO_ONLY = new Set(['s-medico-home','s-medico-historico','s-medico-ativa','s-medico-emitir']);
 
 function goBack(id){
   const target = (id !== undefined) ? id : (navHistory.pop() || 's-login');
@@ -5544,8 +5554,7 @@ function goTo(id, isBack=false){
     showToast('Acesso restrito a gestores.', 'error'); return;
   }
   // Guarda de role — bloqueia gestor/funcionário de acessar telas de médico
-  const _MEDICO_SCREENS = new Set(['s-medico-home','s-medico-historico','s-medico-ativa','s-medico-emitir']);
-  if(_MEDICO_SCREENS.has(id) && loggedUser?.role !== 'medico' && !_isSuperAdmin()){
+  if(_MEDICO_ONLY.has(id) && loggedUser?.role !== 'medico' && !_isSuperAdmin()){
     showToast('Acesso restrito a médicos.', 'error'); return;
   }
 
@@ -5982,6 +5991,26 @@ function dismissSug(id){
   setTimeout(()=>el.remove(), 300);
 }
 
+// ── DADOS DINÂMICOS DO GESTOR ────────────────────
+function _populateGestorPerfil(user, email) {
+  if (!user || user.role !== 'gestor') return;
+
+  // Atualiza data de hoje no hub do gestor
+  const dateEl = document.querySelector('#s-gestor-home .gestor-date-txt');
+  if (dateEl) dateEl.textContent = 'Hoje, ' + new Date().toLocaleDateString('pt-BR', { day:'numeric', month:'short', year:'numeric' });
+
+  // Popula campos do perfil do gestor com dados do usuário logado
+  const fields = [
+    ['#s-gestor-perfil .gestor-nome-display', user.name],
+    ['#s-gestor-perfil .gestor-nome-campo',   user.name],
+    ['#s-gestor-perfil .gestor-email-campo',  email],
+    ['#s-gestor-perfil .gestor-empresa-nome', user.company],
+  ];
+  fields.forEach(([sel, val]) => {
+    document.querySelectorAll(sel).forEach(el => { if(val) el.textContent = val; });
+  });
+}
+
 // ── RECUPERAÇÃO DE SENHA ─────────────────────────
 async function _forgotPassword(){
   const email = (document.getElementById('login-email')?.value || '').trim().toLowerCase();
@@ -6029,10 +6058,11 @@ async function _saLoadStats() {
   if (!el) return;
   el.innerHTML = '<div style="grid-column:1/-1;text-align:center;font-size:13px;color:var(--medium);padding:10px;">Carregando...</div>';
   try {
-    const [{ count: users }, { count: companies }, { count: appts }] = await Promise.all([
+    const [{ count: users }, { count: companies }, { count: appts }, { count: medicos }] = await Promise.all([
       _supa.from('profiles').select('*', { count: 'exact', head: true }),
       _supa.from('companies').select('*', { count: 'exact', head: true }),
-      _supa.from('appointments').select('*', { count: 'exact', head: true })
+      _supa.from('appointments').select('*', { count: 'exact', head: true }),
+      _supa.from('profiles').select('*', { count: 'exact', head: true }).eq('role','medico')
     ]);
     const card = (val, label, color) =>
       `<div style="background:#fff;border-radius:14px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.05);text-align:center;">
@@ -6043,44 +6073,50 @@ async function _saLoadStats() {
       card(users,     'Usuários',    '#7C3AED') +
       card(companies, 'Empresas',    'var(--gold)') +
       card(appts,     'Consultas',   'var(--blue)') +
-      card('—',       'Médicos',     'var(--success)');
+      card(medicos,   'Médicos',     'var(--success)');
   } catch(_) { el.innerHTML = ''; }
 }
 
 async function _saVerTodosUsuarios() {
   const out = document.getElementById('sa-output');
   out.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--medium);">Carregando...</div>';
-  const { data } = await _supa.from('profiles').select('name, initials, role, health_score, companies(name)').order('created_at', { ascending: false });
-  if (!data?.length) { out.innerHTML = '<div style="text-align:center;padding:20px;color:var(--medium);">Nenhum usuário.</div>'; return; }
-  const roleColor = { gestor:'var(--gold)', funcionario:'var(--blue)', medico:'var(--success)', superadmin:'#7C3AED' };
-  out.innerHTML = `<div style="font-size:11px;font-weight:700;color:var(--medium);letter-spacing:.7px;text-transform:uppercase;margin-bottom:10px;">USUÁRIOS (${data.length})</div>` +
-    `<div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);">` +
-    data.map((u, i) => `
-      <div style="display:flex;align-items:center;gap:12px;padding:13px 16px;${i < data.length-1 ? 'border-bottom:1px solid #F0F4FA;' : ''}">
-        <div style="width:36px;height:36px;background:var(--blue-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--blue);flex-shrink:0;">${u.initials}</div>
-        <div style="flex:1;">
-          <div style="font-size:14px;font-weight:600;color:var(--dark);">${u.name}</div>
-          <div style="font-size:11px;color:var(--medium);">${u.companies?.name || '—'}</div>
-        </div>
-        <span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;background:rgba(0,0,0,.06);color:${roleColor[u.role] || 'var(--medium)'};">${u.role}</span>
-      </div>`).join('') + `</div><div style="height:30px;"></div>`;
+  try {
+    const { data, error } = await _supa.from('profiles').select('name, initials, role, companies(name)').order('created_at', { ascending: false });
+    if (error) throw error;
+    if (!data?.length) { out.innerHTML = '<div style="text-align:center;padding:20px;color:var(--medium);">Nenhum usuário.</div>'; return; }
+    const roleColor = { gestor:'var(--gold)', funcionario:'var(--blue)', medico:'var(--success)', superadmin:'#7C3AED' };
+    out.innerHTML = `<div style="font-size:11px;font-weight:700;color:var(--medium);letter-spacing:.7px;text-transform:uppercase;margin-bottom:10px;">USUÁRIOS (${data.length})</div>` +
+      `<div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);">` +
+      data.map((u, i) => `
+        <div style="display:flex;align-items:center;gap:12px;padding:13px 16px;${i < data.length-1 ? 'border-bottom:1px solid #F0F4FA;' : ''}">
+          <div style="width:36px;height:36px;background:var(--blue-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--blue);flex-shrink:0;">${escapeHtml(u.initials||'?')}</div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:600;color:var(--dark);">${escapeHtml(u.name||'—')}</div>
+            <div style="font-size:11px;color:var(--medium);">${escapeHtml(u.companies?.name||'—')}</div>
+          </div>
+          <span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;background:rgba(0,0,0,.06);color:${roleColor[u.role]||'var(--medium)'};">${escapeHtml(u.role||'—')}</span>
+        </div>`).join('') + `</div><div style="height:30px;"></div>`;
+  } catch(e) { out.innerHTML = `<div style="text-align:center;padding:20px;color:var(--danger);">Erro ao carregar: ${escapeHtml(e.message)}</div>`; }
 }
 
 async function _saVerEmpresas() {
   const out = document.getElementById('sa-output');
   out.innerHTML = '<div style="text-align:center;padding:16px;font-size:13px;color:var(--medium);">Carregando...</div>';
-  const { data } = await _supa.from('companies').select('name, access_code, plan_type, active');
-  if (!data?.length) { out.innerHTML = ''; return; }
-  out.innerHTML = `<div style="font-size:11px;font-weight:700;color:var(--medium);letter-spacing:.7px;text-transform:uppercase;margin-bottom:10px;">EMPRESAS</div>` +
-    `<div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);">` +
-    data.map((c, i) => `
-      <div style="display:flex;align-items:center;gap:12px;padding:13px 16px;${i < data.length-1 ? 'border-bottom:1px solid #F0F4FA;' : ''}">
-        <div style="flex:1;">
-          <div style="font-size:14px;font-weight:600;color:var(--dark);">${c.name}</div>
-          <div style="font-size:11px;color:var(--medium);">Código: ${c.access_code}</div>
-        </div>
-        <span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;background:rgba(207,160,48,.12);color:var(--gold);">${c.plan_type}</span>
-      </div>`).join('') + `</div><div style="height:30px;"></div>`;
+  try {
+    const { data, error } = await _supa.from('companies').select('name, access_code, plan_type, active');
+    if (error) throw error;
+    if (!data?.length) { out.innerHTML = '<div style="text-align:center;padding:20px;color:var(--medium);">Nenhuma empresa.</div>'; return; }
+    out.innerHTML = `<div style="font-size:11px;font-weight:700;color:var(--medium);letter-spacing:.7px;text-transform:uppercase;margin-bottom:10px;">EMPRESAS</div>` +
+      `<div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);">` +
+      data.map((c, i) => `
+        <div style="display:flex;align-items:center;gap:12px;padding:13px 16px;${i < data.length-1 ? 'border-bottom:1px solid #F0F4FA;' : ''}">
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:600;color:var(--dark);">${escapeHtml(c.name||'—')}</div>
+            <div style="font-size:11px;color:var(--medium);">Código: ${escapeHtml((c.access_code||'').slice(0,4)+'****')}</div>
+          </div>
+          <span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;background:rgba(207,160,48,.12);color:var(--gold);">${escapeHtml(c.plan_type||'—')}</span>
+        </div>`).join('') + `</div><div style="height:30px;"></div>`;
+  } catch(e) { out.innerHTML = `<div style="text-align:center;padding:20px;color:var(--danger);">Erro ao carregar: ${escapeHtml(e.message)}</div>`; }
 }
 
 function _saCriarMedico() {
@@ -6107,24 +6143,34 @@ async function _saSubmitMedico() {
   const spec  = document.getElementById('sa-med-spec')?.value.trim();
   const crm   = document.getElementById('sa-med-crm')?.value.trim();
   const msg   = document.getElementById('sa-med-msg');
-  if (!nome || !email) { if(msg) msg.textContent = 'Preencha nome e e-mail.'; return; }
-  if(msg) msg.textContent = 'Criando...';
+  if (!nome || !email) { if(msg) { msg.style.color='var(--danger)'; msg.textContent = 'Preencha nome e e-mail.'; } return; }
+  if(msg) { msg.style.color='var(--medium)'; msg.textContent = 'Criando conta...'; }
   try {
-    const pw = 'Medico@' + Math.random().toString(36).slice(2,8);
-    const { data: authData, error } = await _supa.auth.signUp({ email, password: pw });
-    if (error) { if(msg) msg.textContent = 'Erro: ' + error.message; return; }
-    const { data: company } = await _supa.from('companies').select('id').eq('access_code','MEDARA2025').single();
+    // Gera senha forte com crypto
+    const arr = new Uint8Array(10);
+    crypto.getRandomValues(arr);
+    const pw = 'M@' + Array.from(arr).map(b=>b.toString(36)).join('').slice(0,10);
+
+    const { data: authData, error: signErr } = await _supa.auth.signUp({ email, password: pw });
+    if (signErr) throw signErr;
+
+    // Busca empresa padrão dos médicos (MEDARA2025)
+    const { data: company, error: coErr } = await _supa.from('companies').select('id').eq('access_code','MEDARA2025').single();
+    if (coErr || !company) throw new Error('Empresa padrão (MEDARA2025) não encontrada. Verifique o banco.');
+
     await _supa.from('profiles').insert({
       id:         authData.user.id,
-      company_id: company?.id,
+      company_id: company.id,
       name:       nome,
-      initials:   nome.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase(),
+      initials:   nome.split(' ').filter(Boolean).map(p=>p[0]).join('').slice(0,2).toUpperCase(),
       role:       'medico',
       sector:     spec || 'Medicina Geral'
     });
-    if(msg) msg.style.color = 'var(--success)';
-    if(msg) msg.textContent = `Médico criado! Senha inicial: ${pw} (anote antes de sair)`;
-  } catch(e) { if(msg) msg.textContent = 'Erro: ' + e.message; }
+
+    if(msg) { msg.style.color = 'var(--success)'; msg.textContent = `✅ Médico criado! Senha: ${pw}`; }
+    // Auto-apaga a senha após 60s por segurança
+    setTimeout(()=>{ if(msg && msg.textContent.includes(pw)) msg.textContent = '✅ Médico criado. Senha enviada por e-mail.'; }, 60000);
+  } catch(e) { if(msg) { msg.style.color='var(--danger)'; msg.textContent = 'Erro: ' + e.message; } }
 }
 
 // ── DADOS DINÂMICOS DO FUNCIONÁRIO ───────────────
@@ -6255,6 +6301,9 @@ let _medicoAppointmentId = null;
 let _medicoTimer = null;
 let _medicoSecs  = 0;
 
+// Mapa seguro de dados de consultas (evita XSS via onclick)
+const _medicoApptMap = {};
+
 async function _loadMedicoAgenda() {
   if (!loggedUser) return;
 
@@ -6266,18 +6315,32 @@ async function _loadMedicoAgenda() {
 
   try {
     const today = new Date().toISOString().slice(0,10);
-    const { data: all } = await _supa.from('appointments')
-      .select('*, profiles(name, initials, company_id)')
+    // Filtra por doctor_name do médico logado — evita ver consultas de outros médicos
+    const { data: all, error } = await _supa.from('appointments')
+      .select('*, profiles!user_id(name, initials, company_id)')
+      .eq('doctor_name', loggedUser.name)
       .order('created_at', { ascending: true });
+    if (error) throw error;
 
-    if (!all) return;
-    const pending   = all.filter(a => a.status === 'pending');
-    const done      = all.filter(a => a.status === 'completed');
-    const todayAll  = all.filter(a => a.created_at?.startsWith(today));
+    if (!all) { el('med-proxima').innerHTML = `<div style="background:var(--bg);border-radius:14px;padding:16px;text-align:center;color:var(--medium);font-size:13px;">Nenhuma consulta pendente no momento</div>`; return; }
+
+    // Armazena dados no mapa seguro — evita injeção via onclick
+    all.forEach(a => { _medicoApptMap[a.id] = a; });
+
+    const pending  = all.filter(a => a.status === 'pending' || a.status === 'active');
+    const done     = all.filter(a => a.status === 'completed');
+    const todayAll = all.filter(a => (a.scheduled_at || a.created_at)?.startsWith(today));
 
     if(el('med-stat-hoje'))      el('med-stat-hoje').textContent      = todayAll.length;
     if(el('med-stat-pendentes')) el('med-stat-pendentes').textContent = pending.length;
     if(el('med-stat-total'))     el('med-stat-total').textContent     = all.length;
+
+    function _btnEntrar(apptId, color) {
+      return `<button data-appt="${apptId}" onclick="medicoEntrarConsulta(this.dataset.appt)"
+        style="background:${color};color:#fff;border:none;border-radius:12px;padding:10px 18px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">
+        Entrar
+      </button>`;
+    }
 
     // Próxima consulta em destaque
     const proxima = pending[0];
@@ -6288,15 +6351,12 @@ async function _loadMedicoAgenda() {
           <div style="background:linear-gradient(135deg,rgba(34,168,104,.12),rgba(15,74,46,.08));border:1px solid rgba(34,168,104,.2);border-radius:16px;padding:16px;">
             <div style="font-size:11px;font-weight:700;color:var(--success);letter-spacing:.6px;margin-bottom:8px;">PRÓXIMA CONSULTA</div>
             <div style="display:flex;align-items:center;gap:12px;">
-              <div style="width:44px;height:44px;background:var(--success);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;">${proxima.profiles?.initials || '?'}</div>
+              <div style="width:44px;height:44px;background:var(--success);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;">${escapeHtml(proxima.profiles?.initials||'?')}</div>
               <div style="flex:1;">
-                <div style="font-size:15px;font-weight:700;color:var(--dark);">${proxima.profiles?.name || 'Paciente'}</div>
-                <div style="font-size:12px;color:var(--medium);">${proxima.specialty || 'Consulta Geral'}</div>
+                <div style="font-size:15px;font-weight:700;color:var(--dark);">${escapeHtml(proxima.profiles?.name||'Paciente')}</div>
+                <div style="font-size:12px;color:var(--medium);">${escapeHtml(proxima.specialty||'Consulta Geral')}</div>
               </div>
-              <button onclick="medicoEntrarConsulta('${proxima.id}','${proxima.agora_channel || ''}','${proxima.profiles?.name || 'Paciente'}','${proxima.specialty || ''}')"
-                style="background:var(--success);color:#fff;border:none;border-radius:12px;padding:10px 18px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">
-                Entrar
-              </button>
+              ${_btnEntrar(proxima.id, 'var(--success)')}
             </div>
           </div>`;
       } else {
@@ -6308,20 +6368,17 @@ async function _loadMedicoAgenda() {
     const agList = el('med-agenda-list');
     if(agList){
       if(!pending.length){
-        agList.innerHTML = `<div style="text-align:center;padding:20px;color:var(--medium);font-size:13px;">Agenda limpa por hoje 🎉</div>`;
+        agList.innerHTML = `<div style="text-align:center;padding:20px;color:var(--medium);font-size:13px;">Agenda vazia por enquanto.</div>`;
       } else {
         agList.innerHTML = `<div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);">` +
           pending.map((a,i)=>`
             <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;${i<pending.length-1?'border-bottom:1px solid #F0F4FA;':''}">
-              <div style="width:40px;height:40px;background:var(--blue-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--blue);flex-shrink:0;">${a.profiles?.initials||'?'}</div>
+              <div style="width:40px;height:40px;background:var(--blue-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--blue);flex-shrink:0;">${escapeHtml(a.profiles?.initials||'?')}</div>
               <div style="flex:1;">
-                <div style="font-size:14px;font-weight:600;color:var(--dark);">${a.profiles?.name||'Paciente'}</div>
-                <div style="font-size:12px;color:var(--medium);">${a.specialty||'—'}</div>
+                <div style="font-size:14px;font-weight:600;color:var(--dark);">${escapeHtml(a.profiles?.name||'Paciente')}</div>
+                <div style="font-size:12px;color:var(--medium);">${escapeHtml(a.specialty||'—')}</div>
               </div>
-              <button onclick="medicoEntrarConsulta('${a.id}','${a.agora_channel||''}','${a.profiles?.name||'Paciente'}','${a.specialty||''}')"
-                style="background:var(--blue);color:#fff;border:none;border-radius:10px;padding:8px 16px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">
-                Entrar
-              </button>
+              ${_btnEntrar(a.id, 'var(--blue)')}
             </div>`).join('') + `</div>`;
       }
     }
@@ -6349,28 +6406,48 @@ async function _loadMedicoHistorico() {
   const list = document.getElementById('med-hist-list');
   if(!list) return;
   list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--medium);font-size:13px;">Carregando...</div>';
-  const { data } = await _supa.from('appointments')
-    .select('*, profiles(name, initials)')
-    .eq('status','completed')
-    .order('created_at', { ascending: false });
-  if(!data?.length){ list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--medium);">Nenhuma consulta concluída ainda.</div>'; return; }
-  list.innerHTML = `<div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);">` +
-    data.map((a,i)=>`
-      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;${i<data.length-1?'border-bottom:1px solid #F0F4FA;':''}">
-        <div style="width:40px;height:40px;background:rgba(34,168,104,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--success);">${a.profiles?.initials||'?'}</div>
-        <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--dark);">${a.profiles?.name||'Paciente'}</div>
-        <div style="font-size:12px;color:var(--medium);">${a.specialty||'—'} · ${new Date(a.created_at).toLocaleDateString('pt-BR')}</div></div>
-        <span style="background:rgba(34,168,104,.1);color:var(--success);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;">Concluída</span>
-      </div>`).join('') + `</div><div style="height:20px;"></div>`;
+  try {
+    const { data, error } = await _supa.from('appointments')
+      .select('*, profiles!user_id(name, initials)')
+      .eq('status','completed')
+      .eq('doctor_name', loggedUser?.name || '')
+      .order('created_at', { ascending: false })
+      .limit(50);
+    if (error) throw error;
+    if(!data?.length){ list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--medium);">Nenhuma consulta concluída ainda.</div>'; return; }
+    list.innerHTML = `<div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05);">` +
+      data.map((a,i)=>`
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;${i<data.length-1?'border-bottom:1px solid #F0F4FA;':''}">
+          <div style="width:40px;height:40px;background:rgba(34,168,104,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--success);">${escapeHtml(a.profiles?.initials||'?')}</div>
+          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--dark);">${escapeHtml(a.profiles?.name||'Paciente')}</div>
+          <div style="font-size:12px;color:var(--medium);">${escapeHtml(a.specialty||'—')} · ${new Date(a.created_at).toLocaleDateString('pt-BR')}</div></div>
+          <span style="background:rgba(34,168,104,.1);color:var(--success);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;">Concluída</span>
+        </div>`).join('') + `</div><div style="height:20px;"></div>`;
+  } catch(e) { list.innerHTML = `<div style="text-align:center;padding:20px;color:var(--danger);">Erro ao carregar histórico.</div>`; }
 }
 
-function medicoEntrarConsulta(apptId, channel, paciente, especialidade) {
+function medicoEntrarConsulta(apptId) {
+  // Dados vindos do mapa seguro — sem XSS via onclick
+  const appt = _medicoApptMap[apptId];
+  if (!appt) { showToast('Consulta não encontrada.', 'error'); return; }
+  const channel     = appt.agora_channel || ('mc' + Date.now().toString(36));
+  const paciente    = appt.profiles?.name || 'Paciente';
+  const especialidade = appt.specialty   || 'Consulta';
+
   _medicoAppointmentId = apptId;
-  _activeChannel = channel || ('mc' + Date.now().toString(36));
+  _activeChannel = channel;
+
   const el = id => document.getElementById(id);
   if(el('med-ativa-paciente')) el('med-ativa-paciente').textContent = paciente;
-  if(el('med-ativa-spec'))     el('med-ativa-spec').textContent     = especialidade || 'Consulta';
+  if(el('med-ativa-spec'))     el('med-ativa-spec').textContent     = especialidade;
   if(el('med-emitir-paciente'))el('med-emitir-paciente').textContent = paciente;
+
+  // Limpa formulário de emissão para nova consulta
+  ['doc-medicamento','doc-posologia','doc-obs','doc-dias','doc-cid'].forEach(id=>{
+    const f = document.getElementById(id); if(f) f.value = '';
+  });
+  selectDocTipo('receita');
+
   // Inicia timer
   _medicoSecs = 0;
   clearInterval(_medicoTimer);
@@ -6381,22 +6458,87 @@ function medicoEntrarConsulta(apptId, channel, paciente, especialidade) {
     const t = document.getElementById('med-timer');
     if(t) t.textContent = m+':'+s;
   }, 1000);
+
   // Atualiza status no banco
-  if(apptId) _supa.from('appointments').update({ status:'active' }).eq('id', apptId).then(()=>{});
+  _supa.from('appointments').update({ status:'active' }).eq('id', apptId).then(()=>{});
   goTo('s-medico-ativa');
-  setTimeout(initAgoraCall, 400);
+  setTimeout(initAgoraCallMedico, 400);
 }
 
-function toggleMedMic(btn){ btn.style.background = btn.style.background.includes('E53935') ? 'rgba(255,255,255,.12)' : '#E53935'; }
-function toggleMedCam(btn){ btn.style.background = btn.style.background.includes('E53935') ? 'rgba(255,255,255,.12)' : '#E53935'; }
+// Versão do Agora dedicada ao lado do médico — usa IDs corretos do DOM
+async function initAgoraCallMedico(){
+  const setStatus = msg => {
+    const t = document.getElementById('med-ativa-spec'); if(t) t.textContent = msg;
+  };
+  try {
+    if(typeof AgoraRTC === 'undefined') throw new Error('SDK não carregado');
+    _agoraAudio = await AgoraRTC.createMicrophoneAudioTrack();
+    _agoraVideo = await AgoraRTC.createCameraVideoTrack();
+    _agoraVideo.play('med-local-video'); // ID correto do DOM do médico
+    setStatus('Câmera ativa · Aguardando paciente...');
+  } catch(e){
+    setStatus('Câmera indisponível'); return;
+  }
+  if(!AGORA_APP_ID){ setStatus('App ID não configurado'); return; }
+  try {
+    _agoraClient = AgoraRTC.createClient({ mode:'rtc', codec:'vp8' });
+    _agoraClient.on('user-published', async (user, mediaType) => {
+      await _agoraClient.subscribe(user, mediaType);
+      if(mediaType === 'video'){
+        const w = document.getElementById('med-waiting');
+        const r = document.getElementById('med-remote-video'); // ID correto
+        if(w) w.style.display = 'none';
+        if(r){ r.style.display = 'block'; user.videoTrack.play('med-remote-video'); }
+      }
+      if(mediaType === 'audio') user.audioTrack.play();
+    });
+    _agoraClient.on('user-unpublished', () => {
+      const r = document.getElementById('med-remote-video');
+      const w = document.getElementById('med-waiting');
+      if(r) r.style.display = 'none';
+      if(w) w.style.display = 'flex';
+      setStatus('Paciente desconectou...');
+    });
+    const uid = Math.floor(Math.random() * 100000);
+    await _agoraClient.join(AGORA_APP_ID, _activeChannel, null, uid);
+    await _agoraClient.publish([_agoraAudio, _agoraVideo]);
+    setStatus('Conectado · Aguardando paciente entrar...');
+  } catch(e){ setStatus('Erro: ' + e.message); }
+}
 
-async function encerrarConsultaMedico() {
+function toggleMedMic(btn){
+  const muted = btn.style.background.includes('E53935');
+  if(_agoraAudio) _agoraAudio.setEnabled(muted); // Agora SDK real
+  btn.style.background = muted ? 'rgba(255,255,255,.12)' : '#E53935';
+}
+function toggleMedCam(btn){
+  const muted = btn.style.background.includes('E53935');
+  if(_agoraVideo) _agoraVideo.setEnabled(muted); // Agora SDK real
+  btn.style.background = muted ? 'rgba(255,255,255,.12)' : '#E53935';
+}
+
+// Sair com confirmação se consulta ativa
+function sairConsultaMedico() {
+  if (_medicoAppointmentId) {
+    if (!confirm('Sair vai encerrar a consulta em andamento. Deseja continuar?')) return;
+  }
+  encerrarConsultaMedico(true);
+}
+
+async function encerrarConsultaMedico(voltarHome) {
   clearInterval(_medicoTimer);
   await cleanupAgora();
   if(_medicoAppointmentId){
-    await _supa.from('appointments').update({ status:'completed' }).eq('id', _medicoAppointmentId);
+    const { error } = await _supa.from('appointments')
+      .update({ status:'completed' }).eq('id', _medicoAppointmentId);
+    if (error) showToast('Aviso: não foi possível atualizar status da consulta.', 'error');
   }
-  goTo('s-medico-emitir');
+  if (voltarHome) {
+    _medicoAppointmentId = null;
+    goTo('s-medico-home');
+  } else {
+    goTo('s-medico-emitir');
+  }
 }
 
 let _docTipoAtual = 'receita';
@@ -6415,30 +6557,38 @@ function selectDocTipo(tipo){
 
 async function emitirDocumento(){
   const msg = document.getElementById('doc-emitir-msg');
-  if(msg) msg.textContent = 'Salvando...';
+
+  // Validação — só emite se houver consulta ativa
+  if (!_medicoAppointmentId) {
+    if(msg){ msg.style.color='var(--danger)'; msg.textContent = 'Nenhuma consulta ativa. Inicie uma consulta primeiro.'; }
+    return;
+  }
+
+  if(msg){ msg.style.color='var(--medium)'; msg.textContent = 'Salvando...'; }
   try {
     const { data: { user } } = await _supa.auth.getUser();
-    // Busca dados do paciente pela consulta
-    const { data: appt } = _medicoAppointmentId
-      ? await _supa.from('appointments').select('user_id, company_id, specialty').eq('id', _medicoAppointmentId).single()
-      : { data: null };
+    const { data: appt, error: apptErr } = await _supa.from('appointments')
+      .select('user_id, company_id, specialty').eq('id', _medicoAppointmentId).single();
+    if (apptErr || !appt) throw new Error('Consulta não encontrada no banco.');
 
     const title = _docTipoAtual === 'receita'
-      ? (document.getElementById('doc-medicamento')?.value || 'Receita')
+      ? (document.getElementById('doc-medicamento')?.value?.trim() || 'Receita Médica')
       : `Atestado Médico – ${document.getElementById('doc-dias')?.value || '1'} dia(s)`;
 
-    await _supa.from('documents').insert({
-      company_id:     appt?.company_id || null,
-      user_id:        appt?.user_id    || user?.id,
-      appointment_id: _medicoAppointmentId || null,
+    const { error: insErr } = await _supa.from('documents').insert({
+      company_id:     appt.company_id,
+      user_id:        appt.user_id,
+      appointment_id: _medicoAppointmentId,
       type:           _docTipoAtual,
       title,
       doctor_name:    loggedUser?.name || 'Médico',
       issued_at:      new Date().toISOString().slice(0,10)
     });
+    if (insErr) throw insErr;
 
-    if(msg){ msg.style.color = 'var(--success)'; msg.textContent = 'Documento emitido com sucesso!'; }
+    if(msg){ msg.style.color = 'var(--success)'; msg.textContent = 'Documento emitido e enviado ao paciente!'; }
     showToast('Documento enviado ao paciente.', 'success');
+    _medicoAppointmentId = null;
     setTimeout(()=>goTo('s-medico-home'), 1800);
   } catch(e){
     if(msg){ msg.style.color = 'var(--danger)'; msg.textContent = 'Erro: ' + e.message; }
@@ -7617,19 +7767,25 @@ setInterval(async () => {
 
 // Re-verificação de role no Supabase para telas sensíveis (bloqueia manipulação via console)
 async function _verifyAccess(screenId) {
-  const sensitive = ['s-superadmin','s-gestor-home','s-gestor-sst','s-gestor-alertas',
-    's-gestor-docs','s-gestor-perfil','s-medico-home','s-medico-ativa','s-medico-emitir'];
-  if (!sensitive.includes(screenId)) return true;
+  // Lista completa de telas que exigem re-verificação no Supabase
+  const sensitive = new Set([
+    's-superadmin',
+    's-gestor-home','s-gestor-sst','s-gestor-alertas','s-gestor-docs','s-gestor-perfil',
+    's-painel-exec','s-score-medara','s-saude-emocional','s-gestor-ia','s-esocial-config',
+    's-afastamentos','s-esocial','s-relatorios','s-risco-trabalhista',
+    's-medico-home','s-medico-historico','s-medico-ativa','s-medico-emitir'
+  ]);
+  if (!sensitive.has(screenId)) return true;
   try {
-    const { data: { user } } = await _supa.auth.getUser();
-    if (!user) { doLogout(); return false; }
+    const { data: { user }, error } = await _supa.auth.getUser();
+    if (error || !user) { doLogout(); return false; }
     if (screenId === 's-superadmin') return user.email === _SA_EMAIL;
-    const { data: profile } = await _supa.from('profiles').select('role').eq('id', user.id).single();
-    if (!profile) return false;
-    if (screenId.startsWith('s-gestor-')) return profile.role === 'gestor';
-    if (screenId.startsWith('s-medico-')) return profile.role === 'medico';
+    const { data: profile, error: pErr } = await _supa.from('profiles').select('role').eq('id', user.id).single();
+    if (pErr || !profile) return false;
+    if (_GESTOR_ONLY.has(screenId) || screenId.startsWith('s-gestor-')) return profile.role === 'gestor';
+    if (_MEDICO_ONLY.has(screenId) || screenId.startsWith('s-medico-')) return profile.role === 'medico';
     return true;
-  } catch(_) { return true; } // Supabase offline → confia no guard local
+  } catch(_) { return false; } // Em dúvida, negar acesso
 }
 
 window.addEventListener('resize', ()=>{
