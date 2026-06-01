@@ -1506,8 +1506,8 @@ body{background:#030d1a !important;}
       <div style="height:14px;"></div>
       <button class="btn btn-outline" onclick="goTo('s-primeiro-acesso')">Primeiro acesso</button>
 
-      <!-- Acesso rápido para testes -->
-      <div style="margin-top:28px;padding-top:20px;border-top:1px solid #EEF2FB;">
+      <!-- Acesso rápido — visível só com chave dev no computador do dev -->
+      <div id="dev-quick-login" style="display:none;margin-top:28px;padding-top:20px;border-top:1px solid #EEF2FB;">
         <p style="text-align:center;font-size:11px;color:var(--light);margin-bottom:12px;letter-spacing:.3px;text-transform:uppercase;font-weight:600;">Acesso rápido</p>
         <div style="display:flex;gap:8px;">
           <button onclick="quickLogin('funcionario')" style="flex:1;height:40px;background:#F0F6FF;border:1.5px solid #C8DCFA;border-radius:12px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:var(--blue);cursor:pointer;">⚡ Álvaro</button>
@@ -5385,12 +5385,14 @@ function selectRole(role){
   document.getElementById('login-btn').textContent = isGestor ? 'Entrar como Gestor' : 'Entrar como Funcionário';
   closeRoleSheet();
 }
+// Exibe botões de acesso rápido se a chave dev estiver ativa neste computador
+if (localStorage.getItem('_mdDev') === 'medara2026dev') {
+  const devEl = document.getElementById('dev-quick-login');
+  if (devEl) devEl.style.display = 'block';
+}
+
 function quickLogin(role) {
-  // Só disponível em ambiente local — bloqueado em produção
-  if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
-    showToast('Acesso rápido disponível apenas em desenvolvimento.', 'error');
-    return;
-  }
+  if (localStorage.getItem('_mdDev') !== 'medara2026dev') return;
   if (role === 'gestor') {
     _startSession(TEST_USERS['adm@lealcastro.com.br'], 'adm@lealcastro.com.br');
   } else {
