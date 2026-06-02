@@ -9,11 +9,19 @@ const WEBHOOK_TOKEN        = process.env.ASAAS_WEBHOOK_TOKEN;
 
 // Mapeia evento Asaas → status da empresa
 const STATUS_MAP = {
-  PAYMENT_RECEIVED:  { payment_status: 'active',    is_active: true,  blocked: false },
-  PAYMENT_CONFIRMED: { payment_status: 'active',    is_active: true,  blocked: false },
-  PAYMENT_OVERDUE:   { payment_status: 'overdue',   is_active: false, blocked: true  },
-  PAYMENT_DELETED:   { payment_status: 'suspended', is_active: false, blocked: true  },
-  PAYMENT_REFUNDED:  { payment_status: 'suspended', is_active: false, blocked: true  },
+  // Ativa
+  PAYMENT_RECEIVED:              { payment_status: 'active',    is_active: true,  blocked: false },
+  PAYMENT_CONFIRMED:             { payment_status: 'active',    is_active: true,  blocked: false },
+  // Bloqueia
+  PAYMENT_OVERDUE:               { payment_status: 'overdue',   is_active: false, blocked: true  },
+  PAYMENT_DELETED:               { payment_status: 'cancelled', is_active: false, blocked: true  },
+  PAYMENT_REFUNDED:              { payment_status: 'refunded',  is_active: false, blocked: true  },
+  PAYMENT_CHARGEBACK_REQUESTED:  { payment_status: 'chargeback',is_active: false, blocked: true  },
+  SUBSCRIPTION_DELETED:          { payment_status: 'cancelled', is_active: false, blocked: true  },
+  // Log apenas (sem mudança de status)
+  SUBSCRIPTION_CREATED:  null,
+  SUBSCRIPTION_UPDATED:  null,
+  PAYMENT_CREATED:       null,
 };
 
 export default async function handler(req, res) {
@@ -33,12 +41,22 @@ export default async function handler(req, res) {
   const body    = req.body;
   const event   = body?.event;
   const payment = body?.payment;
-  const subId   = payment?.subscription;
+
+  // SUBSCRIPTION_DELETED tem o ID no objeto subscription, não em payment
+  const subId = event?.startsWith('SUBSCRIPTION_')
+    ? (body?.subscription?.id ?? body?.subscription)
+    : payment?.subscription;
 
   console.log(`[webhook] event=${event} subscription=${subId}`);
 
-  // Ignora eventos não mapeados
-  if (!STATUS_MAP[event]) {
+  // Eventos de log apenas (sem ação no banco)
+  if (STATUS_MAP[event] === null) {
+    console.log(`[webhook] evento de log: ${event}`);
+    return res.status(200).json({ received: true, logged: true });
+  }
+
+  // Ignora eventos completamente desconhecidos
+  if (!(event in STATUS_MAP)) {
     return res.status(200).json({ received: true, ignored: true });
   }
 
