@@ -1,4 +1,4 @@
-const CACHE = 'medara-v8';
+const CACHE = 'medara-v9';
 const STATIC = ['/coracao.png', '/letras.png', '/medara-logo.jpg', '/icons/icon-192.png', '/icons/icon-512.png', '/manifest.json'];
 const HTML   = ['/', '/index.html'];
 
@@ -20,14 +20,21 @@ self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   const url = new URL(e.request.url);
 
-  // HTML — network-first: sempre busca o mais novo, só usa cache se offline
+  // HTML — stale-while-revalidate:
+  // Serve do cache imediatamente (sem spinner), atualiza em background
   if (HTML.includes(url.pathname) || url.pathname === '/') {
     e.respondWith(
-      fetch(e.request).then(res => {
-        const clone = res.clone();
-        caches.open(CACHE).then(c => c.put(e.request, clone));
-        return res;
-      }).catch(() => caches.match(e.request))
+      caches.open(CACHE).then(cache =>
+        cache.match(e.request).then(cached => {
+          const fetchAndUpdate = fetch(e.request).then(res => {
+            if (res && res.status === 200) cache.put(e.request, res.clone());
+            return res;
+          }).catch(() => cached);
+
+          // Retorna cache imediatamente se disponível, senão aguarda rede
+          return cached || fetchAndUpdate;
+        })
+      )
     );
     return;
   }
