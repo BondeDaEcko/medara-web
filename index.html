@@ -5281,7 +5281,7 @@ function runSplash(){
       if (session?.user) {
         const { data: profile } = await _supa
           .from('profiles')
-          .select('*, companies(name)')
+          .select('*, companies(name, is_active, payment_status)')
           .eq('id', session.user.id)
           .single();
         if (profile) {
@@ -5511,6 +5511,17 @@ async function doLogin(){
         .single();
 
       if (profile) {
+        // Verifica se a empresa está ativa (pagamento em dia)
+        if (profile.companies?.is_active === false) {
+          const status = profile.companies?.payment_status;
+          const msg = status === 'overdue'
+            ? 'Acesso suspenso por pagamento em atraso. Contate seu gestor.'
+            : 'Acesso da empresa suspenso. Contate o suporte MEDARA.';
+          showErr(msg, null, false);
+          if(btn){ btn.disabled = false; btn.textContent = btn._origText; }
+          await _supa.auth.signOut();
+          return;
+        }
         errBox.style.display = 'none';
         _rl.a = 0; _rl.u = 0;
         if(btn){ btn.disabled = false; btn.textContent = btn._origText; }
