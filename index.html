@@ -1257,6 +1257,13 @@ body{background:#030d1a !important;}
   .back-appbar{padding-top:16px !important;}
   /* Scroll area — no bottom nav */
   .scroll-area{padding-bottom:40px !important;}
+  /* Acesso rápido — ícones maiores no desktop */
+  .qai-box{width:80px !important;height:80px !important;border-radius:22px !important;}
+  .qai-box svg{width:32px !important;height:32px !important;}
+  .qai-label{font-size:13px !important;}
+  .qai-grid{gap:16px !important;}
+  /* Home no desktop — largura máxima para não esticar demais */
+  #s-home .scroll-area{max-width:640px;margin-left:auto;margin-right:auto;}
   /* IAB panel */
   #iab-panel{left:0 !important;width:100vw !important;transform:translateX(0) translateY(100%) !important;}
   #iab-panel.open{transform:translateX(0) translateY(0) !important;}
@@ -1749,34 +1756,34 @@ body{background:#030d1a !important;}
       <!-- Acesso rápido -->
       <div style="padding:0 20px;margin-bottom:20px;">
         <span style="font-size:15px;font-weight:700;color:var(--dark);display:block;margin-bottom:12px;">Acesso Rápido</span>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+        <div class="qai-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
 
           <div onclick="goTo('s-ativa')" style="display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;-webkit-tap-highlight-color:transparent;" onpointerdown="this.style.transform='scale(0.93)'" onpointerup="this.style.transform='scale(1)'" onpointercancel="this.style.transform='scale(1)'">
-            <div style="width:56px;height:56px;background:var(--blue);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(61,130,216,.32);transition:transform .15s;">
+            <div class="qai-box" style="width:56px;height:56px;background:var(--blue);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(61,130,216,.32);transition:transform .15s;">
               <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" style="width:24px;height:24px;"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
             </div>
-            <span style="font-size:11px;font-weight:600;color:var(--dark);text-align:center;line-height:1.25;letter-spacing:-.01em;">Consulta Online</span>
+            <span class="qai-label" style="font-size:11px;font-weight:600;color:var(--dark);text-align:center;line-height:1.25;letter-spacing:-.01em;">Consulta Online</span>
           </div>
 
           <div onclick="openAgendamento('Psicólogo','psychology')" style="display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;-webkit-tap-highlight-color:transparent;" onpointerdown="this.style.transform='scale(0.93)'" onpointerup="this.style.transform='scale(1)'" onpointercancel="this.style.transform='scale(1)'">
-            <div style="width:56px;height:56px;background:rgba(123,94,167,.12);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(123,94,167,.12);transition:transform .15s;">
+            <div class="qai-box" style="width:56px;height:56px;background:rgba(123,94,167,.12);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(123,94,167,.12);transition:transform .15s;">
               <svg viewBox="0 0 24 24" fill="none" stroke="#7B5EA7" stroke-width="2" style="width:24px;height:24px;"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v4M12 16h.01"/></svg>
             </div>
-            <span style="font-size:11px;font-weight:600;color:var(--dark);text-align:center;line-height:1.25;letter-spacing:-.01em;">Psicólogo</span>
+            <span class="qai-label" style="font-size:11px;font-weight:600;color:var(--dark);text-align:center;line-height:1.25;letter-spacing:-.01em;">Psicólogo</span>
           </div>
 
           <div onclick="goTo('s-exames')" style="display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;-webkit-tap-highlight-color:transparent;" onpointerdown="this.style.transform='scale(0.93)'" onpointerup="this.style.transform='scale(1)'" onpointercancel="this.style.transform='scale(1)'">
-            <div style="width:56px;height:56px;background:rgba(217,119,6,.1);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(217,119,6,.12);transition:transform .15s;">
+            <div class="qai-box" style="width:56px;height:56px;background:rgba(217,119,6,.1);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(217,119,6,.12);transition:transform .15s;">
               <svg viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" style="width:24px;height:24px;"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/></svg>
             </div>
-            <span style="font-size:11px;font-weight:600;color:var(--dark);text-align:center;line-height:1.25;letter-spacing:-.01em;">Meus Exames</span>
+            <span class="qai-label" style="font-size:11px;font-weight:600;color:var(--dark);text-align:center;line-height:1.25;letter-spacing:-.01em;">Meus Exames</span>
           </div>
 
           <div onclick="goTo('s-receitas')" style="display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;-webkit-tap-highlight-color:transparent;" onpointerdown="this.style.transform='scale(0.93)'" onpointerup="this.style.transform='scale(1)'" onpointercancel="this.style.transform='scale(1)'">
-            <div style="width:56px;height:56px;background:var(--blue-light);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(61,130,216,.1);transition:transform .15s;">
+            <div class="qai-box" style="width:56px;height:56px;background:var(--blue-light);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(61,130,216,.1);transition:transform .15s;">
               <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" style="width:24px;height:24px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             </div>
-            <span style="font-size:11px;font-weight:600;color:var(--dark);text-align:center;line-height:1.25;letter-spacing:-.01em;">Receitas Digitais</span>
+            <span class="qai-label" style="font-size:11px;font-weight:600;color:var(--dark);text-align:center;line-height:1.25;letter-spacing:-.01em;">Receitas Digitais</span>
           </div>
 
         </div>
