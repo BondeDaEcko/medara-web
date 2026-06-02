@@ -31,9 +31,9 @@ export default async function handler(req, res) {
 
   // Valida token de autenticação do Asaas
   if (WEBHOOK_TOKEN) {
-    const token = req.headers['asaas-access-token'];
-    if (!token || token !== WEBHOOK_TOKEN) {
-      console.error('[webhook] Token inválido:', token);
+    const token = (req.headers['asaas-access-token'] || '').trim();
+    if (!token || token !== WEBHOOK_TOKEN.trim()) {
+      console.error('[webhook] Token inválido');
       return res.status(401).json({ error: 'Unauthorized' });
     }
   }
@@ -69,7 +69,7 @@ export default async function handler(req, res) {
   // Monta patch para o Supabase
   const patch = {
     payment_status,
-    is_active,
+    active:        is_active,
     blocked_at:    blocked ? new Date().toISOString() : null,
     next_due_date: payment?.dueDate ?? null,
   };
@@ -82,7 +82,7 @@ export default async function handler(req, res) {
         'Content-Type':  'application/json',
         'apikey':        SUPABASE_SERVICE_KEY,
         'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-        'Prefer':        'return=representation',
+        'Prefer':        'return=minimal',
       },
       body: JSON.stringify(patch),
     });
@@ -93,8 +93,7 @@ export default async function handler(req, res) {
       return res.status(502).json({ error: 'Supabase update failed' });
     }
 
-    const updated = await resp.json();
-    console.log(`[webhook] empresa atualizada: ${JSON.stringify(updated?.[0]?.name)} → ${payment_status}`);
+    console.log(`[webhook] update OK → subscription=${subId} status=${payment_status}`);
     return res.status(200).json({ received: true });
 
   } catch (err) {

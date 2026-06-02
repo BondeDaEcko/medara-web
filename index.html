@@ -5281,7 +5281,7 @@ function runSplash(){
       if (session?.user) {
         const { data: profile } = await _supa
           .from('profiles')
-          .select('*, companies(name, is_active, payment_status)')
+          .select('*, companies(name, active, payment_status)')
           .eq('id', session.user.id)
           .single();
         if (profile) {
@@ -5512,7 +5512,7 @@ async function doLogin(){
 
       if (profile) {
         // Verifica se a empresa está ativa (pagamento em dia)
-        if (profile.companies?.is_active === false) {
+        if (profile.companies?.active === false) {
           const status = profile.companies?.payment_status;
           const msg = status === 'overdue'
             ? 'Acesso suspenso por pagamento em atraso. Contate seu gestor.'
