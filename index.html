@@ -4696,7 +4696,19 @@ body{background:#030d1a !important;}
         <svg onclick="goTo('s-notificacoes')" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" style="width:22px;height:22px;cursor:pointer;margin-left:auto;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </div>
       <div style="display:flex;align-items:center;gap:16px;">
-        <div class="perfil-avatar" id="perfil-user-initials">MS</div>
+        <!-- Avatar com botão de edição -->
+        <div style="position:relative;flex-shrink:0;">
+          <div class="perfil-avatar" id="perfil-user-initials" style="overflow:hidden;background-size:cover;background-position:center;background-repeat:no-repeat;">MS</div>
+          <button onclick="openAvatarPicker()"
+            style="position:absolute;bottom:1px;right:1px;width:22px;height:22px;background:var(--blue);border:2px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 2px 6px rgba(0,0,0,.2);"
+            title="Alterar foto">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" style="width:11px;height:11px;">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+          </button>
+          <input type="file" id="avatar-input" accept="image/*" style="display:none;" onchange="handleAvatarChange(this)">
+        </div>
         <div>
           <div style="font-size:18px;font-weight:700;color:#fff;" id="perfil-user-name">Maria Silva</div>
           <div style="font-size:13px;color:rgba(255,255,255,.7);" id="perfil-user-email">pedro@lealcastro.com.br</div>
@@ -5711,6 +5723,7 @@ function goTo(id, isBack=false){
   if(id==='s-exames')         setTimeout(_loadLaudos,     100);
   if(id==='s-documentos')     setTimeout(_loadDocumentos, 100);
   if(id==='s-dados-pessoais') _updateDadosPessoais();
+  if(id==='s-perfil')         setTimeout(_loadSavedAvatar, 100);
   if(id==='s-home')           setTimeout(_loadHomeNext,   200);
   if(id==='s-superadmin')       setTimeout(_saLoadStats,       100);
   if(id==='s-medico-home')      setTimeout(_loadMedicoAgenda,  150);
@@ -6103,6 +6116,114 @@ function _populateGestorPerfil(user, email) {
   fields.forEach(([sel, val]) => {
     document.querySelectorAll(sel).forEach(el => { if(val) el.textContent = val; });
   });
+}
+
+// ── FOTO DE PERFIL ───────────────────────────────
+
+function openAvatarPicker() {
+  document.getElementById('avatar-input')?.click();
+}
+
+async function handleAvatarChange(input) {
+  const file = input.files?.[0];
+  if (!file) return;
+
+  showToast('Processando foto...', 'info');
+
+  try {
+    // Redimensiona para 200x200 via canvas
+    const dataUrl = await _resizeImage(file, 200);
+
+    // Tenta upload no Supabase Storage
+    let finalUrl = null;
+    try {
+      const ext   = file.type.includes('png') ? 'png' : 'jpg';
+      const path  = `${loggedSupabaseId || Date.now()}.${ext}`;
+      const blob  = await (await fetch(dataUrl)).blob();
+
+      const { error: upErr } = await _supa.storage
+        .from('avatars')
+        .upload(path, blob, { upsert: true, contentType: file.type });
+
+      if (!upErr) {
+        const { data } = _supa.storage.from('avatars').getPublicUrl(path);
+        finalUrl = data?.publicUrl || null;
+      }
+    } catch(_) {}
+
+    // Fallback: salva base64 no localStorage
+    if (!finalUrl) finalUrl = dataUrl;
+
+    // Persiste a URL no localStorage (disponível offline)
+    if (loggedEmail) localStorage.setItem(`avatar_${loggedEmail}`, finalUrl);
+
+    // Atualiza no banco se tiver sessão Supabase
+    if (loggedSupabaseId) {
+      await _supa.from('profiles').update({ avatar_url: finalUrl }).eq('id', loggedSupabaseId);
+    }
+
+    // Aplica na tela imediatamente
+    _applyAvatar(finalUrl);
+    showToast('Foto atualizada!', 'success');
+  } catch(e) {
+    showToast('Erro ao salvar foto.', 'error');
+  }
+
+  input.value = ''; // limpa o input para permitir reselecionar
+}
+
+function _resizeImage(file, size) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        // Crop centralizado
+        const min = Math.min(img.width, img.height);
+        const sx  = (img.width  - min) / 2;
+        const sy  = (img.height - min) / 2;
+        ctx.drawImage(img, sx, sy, min, min, 0, 0, size, size);
+        resolve(canvas.toDataURL('image/jpeg', 0.85));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function _applyAvatar(url) {
+  if (!url) return;
+  const av = document.getElementById('perfil-user-initials');
+  if (av) {
+    av.style.backgroundImage = `url('${url}')`;
+    av.style.backgroundSize  = 'cover';
+    av.style.backgroundPosition = 'center';
+    av.style.color = 'transparent'; // esconde as iniciais
+  }
+  // Atualiza também no sidebar desktop
+  const sideAv = document.getElementById('dt-user-av');
+  if (sideAv) {
+    sideAv.style.backgroundImage = `url('${url}')`;
+    sideAv.style.backgroundSize  = 'cover';
+    sideAv.style.backgroundPosition = 'center';
+    sideAv.style.color = 'transparent';
+  }
+}
+
+function _loadSavedAvatar() {
+  // Carrega foto salva do localStorage ou do profile
+  const saved = loggedEmail ? localStorage.getItem(`avatar_${loggedEmail}`) : null;
+  if (saved) { _applyAvatar(saved); return; }
+  // Tenta carregar do Supabase
+  if (loggedSupabaseId) {
+    _supa.from('profiles').select('avatar_url').eq('id', loggedSupabaseId).single()
+      .then(({ data }) => { if (data?.avatar_url) _applyAvatar(data.avatar_url); });
+  }
 }
 
 // ── RECUPERAÇÃO DE SENHA ─────────────────────────
