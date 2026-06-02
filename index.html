@@ -1743,22 +1743,7 @@ body{background:#030d1a !important;}
           <span style="font-size:15px;font-weight:700;color:var(--dark);">Próxima Consulta</span>
           <button class="see-all" onclick="goTab(2)" style="background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;">Histórico</button>
         </div>
-        <div class="next-appt-card">
-          <div class="appt-top">
-            <div class="appt-avatar">AR</div>
-            <div style="flex:1;">
-              <div style="font-size:15px;font-weight:600;color:var(--dark);">Dra. Ana Rodrigues</div>
-              <div style="font-size:13px;color:var(--medium);">Psicóloga</div>
-            </div>
-            <span class="badge badge-green"><span class="dot"></span>Hoje</span>
-          </div>
-          <div class="divider"></div>
-          <div style="display:flex;align-items:center;padding:12px 16px;gap:6px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--medium)" stroke-width="2" style="width:15px;height:15px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span style="font-size:13px;color:var(--medium);flex:1;">14:30 · Videochamada</span>
-            <button class="appt-enter" onclick="goTo('s-ativa')">Entrar</button>
-          </div>
-        </div>
+        <div id="home-next-appt-container"></div>
       </div>
 
       <!-- Acesso rápido -->
@@ -4825,47 +4810,9 @@ body{background:#030d1a !important;}
       <div class="tab" style="flex:1;padding:12px;text-align:center;font-size:13px;font-weight:500;cursor:pointer;" onclick="filterDocTab(2,this)">Exames</div>
     </div>
     <div class="scroll-area-full" style="padding:16px 20px 40px;">
-      <div class="doc-group" data-tab="0">
-        <div class="doc-item">
-          <div class="doc-icon" style="background:var(--blue-light);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" style="width:22px;height:22px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--dark);">Receita Digital</div><div style="font-size:12px;color:var(--medium);">Dra. Ana Rodrigues · Psicóloga</div><div style="font-size:11px;color:var(--light);margin-top:3px;">10/05/2026</div></div>
-          <button class="doc-dl" onclick="showToast('Documento salvo no seu dispositivo')">Baixar</button>
-        </div>
-        <div class="doc-item">
-          <div class="doc-icon" style="background:var(--blue-light);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" style="width:22px;height:22px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--dark);">Receita Digital</div><div style="font-size:12px;color:var(--medium);">Dr. Paulo Freitas · Clínico Geral</div><div style="font-size:11px;color:var(--light);margin-top:3px;">02/05/2026</div></div>
-          <button class="doc-dl" onclick="showToast('Documento salvo no seu dispositivo')">Baixar</button>
-        </div>
-      </div>
-      <div class="doc-group" data-tab="1" style="display:none;">
-        <div class="doc-item">
-          <div class="doc-icon" style="background:rgba(232,136,42,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" style="width:22px;height:22px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--dark);">Atestado Médico · 1 dia</div><div style="font-size:12px;color:var(--medium);">Dr. Paulo Freitas · Clínico Geral</div><div style="font-size:11px;color:var(--light);margin-top:3px;">02/05/2026</div></div>
-          <button class="doc-dl" onclick="showToast('Documento salvo no seu dispositivo')">Baixar</button>
-        </div>
-        <div class="doc-item">
-          <div class="doc-icon" style="background:rgba(232,136,42,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" style="width:22px;height:22px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--dark);">Atestado Médico · 2 dias</div><div style="font-size:12px;color:var(--medium);">Dr. Roberto Silva · Clínico Geral</div><div style="font-size:11px;color:var(--light);margin-top:3px;">15/04/2026</div></div>
-          <button class="doc-dl" onclick="showToast('Documento salvo no seu dispositivo')">Baixar</button>
-        </div>
-        <div class="doc-item">
-          <div class="doc-icon" style="background:rgba(232,136,42,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" style="width:22px;height:22px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--dark);">Atestado Médico · 1 dia</div><div style="font-size:12px;color:var(--medium);">Dr. Pedro Santos · Clínico Geral</div><div style="font-size:11px;color:var(--light);margin-top:3px;">10/03/2026</div></div>
-          <button class="doc-dl" onclick="showToast('Documento salvo no seu dispositivo')">Baixar</button>
-        </div>
-      </div>
-      <div class="doc-group" data-tab="2" style="display:none;">
-        <div class="doc-item">
-          <div class="doc-icon" style="background:rgba(46,158,110,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" style="width:22px;height:22px;"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/></svg></div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--dark);">Hemograma Completo</div><div style="font-size:12px;color:var(--medium);">Laboratório Fleury</div><div style="font-size:11px;color:var(--light);margin-top:3px;">28/04/2026 · <span style="color:var(--success);font-weight:600;">Normal</span></div></div>
-          <button class="doc-dl" onclick="showToast('Documento salvo no seu dispositivo')">Baixar</button>
-        </div>
-        <div class="doc-item">
-          <div class="doc-icon" style="background:rgba(46,158,110,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" style="width:22px;height:22px;"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/></svg></div>
-          <div style="flex:1;"><div style="font-size:14px;font-weight:600;color:var(--dark);">Exame de Urina EAS</div><div style="font-size:12px;color:var(--medium);">Laboratório Fleury</div><div style="font-size:11px;color:var(--light);margin-top:3px;">28/04/2026 · <span style="color:var(--success);font-weight:600;">Normal</span></div></div>
-          <button class="doc-dl" onclick="showToast('Documento salvo no seu dispositivo')">Baixar</button>
-        </div>
-      </div>
+      <div class="doc-group" data-tab="0" id="docs-receitas"></div>
+      <div class="doc-group" data-tab="1" id="docs-atestados" style="display:none;"></div>
+      <div class="doc-group" data-tab="2" id="docs-exames-docs" style="display:none;"></div>
     </div>
   </div>
 
@@ -5285,6 +5232,10 @@ function runSplash(){
           .eq('id', session.user.id)
           .single();
         if (profile) {
+          if (profile.companies?.active === false) {
+            goTo('s-login'); return;
+          }
+          loggedSupabaseId = session.user.id;
           _startSession(_profileToUser(profile, profile.companies?.name), session.user.email);
           return;
         }
@@ -5363,16 +5314,18 @@ document.addEventListener('pointerdown', e=>{
   document.body.insertBefore(el,document.body.firstChild);
 });
 
-// ── USUÁRIOS DE TESTE ────────────────────────────
-const TEST_USERS = {
+// ── USUÁRIOS DE TESTE (só visíveis com flag dev ativa) ────────────────────
+const TEST_USERS = localStorage.getItem('_mdDev') === 'medara2026dev' ? {
   'pedro@lealcastro.com.br':   { pw:'Medara@123', name:'Pedro',           initials:'P',  role:'funcionario', company:'Leal Castro', score:74 },
   'adriana@lealcastro.com.br': { pw:'Medara@123', name:'Adriana',         initials:'A',  role:'funcionario', company:'Leal Castro', score:81 },
   'vanessa@lealcastro.com.br': { pw:'Medara@123', name:'Vanessa',         initials:'V',  role:'funcionario', company:'Leal Castro', score:69 },
   'adm@lealcastro.com.br':     { pw:'Gestor@123', name:'Leal Castro ADM', initials:'LC', role:'gestor',      company:'Leal Castro', score:0  },
   'alvaro@medara.com.br':      { pw:'Alvaro@123', name:'Álvaro',          initials:'AL', role:'funcionario', company:'MEDARA Demo',  score:88 },
   'gestor@medara.com.br':      { pw:'Gestor@123', name:'Álvaro Gestor',   initials:'AG', role:'gestor',      company:'MEDARA Demo',  score:0  },
-};
+} : {};
+
 let loggedUser = null;
+let loggedSupabaseId = null; // UUID do Supabase para filtrar dados por usuário
 
 // ── SUPABASE CLIENT ───────────────────────────────
 const _SUPA_URL = 'https://medara-supabase.dxqf51.easypanel.host';
@@ -5525,6 +5478,7 @@ async function doLogin(){
         errBox.style.display = 'none';
         _rl.a = 0; _rl.u = 0;
         if(btn){ btn.disabled = false; btn.textContent = btn._origText; }
+        loggedSupabaseId = authData.user.id;
         _startSession(_profileToUser(profile, profile.companies?.name), email);
         return;
       }
@@ -5695,7 +5649,9 @@ function goTo(id, isBack=false){
   if(id==='s-historico')      setTimeout(_loadHistorico,  100);
   if(id==='s-receitas')       setTimeout(_loadReceitas,   100);
   if(id==='s-exames')         setTimeout(_loadLaudos,     100);
+  if(id==='s-documentos')     setTimeout(_loadDocumentos, 100);
   if(id==='s-dados-pessoais') _updateDadosPessoais();
+  if(id==='s-home')           setTimeout(_loadHomeNext,   200);
   if(id==='s-superadmin')       setTimeout(_saLoadStats,       100);
   if(id==='s-medico-home')      setTimeout(_loadMedicoAgenda,  150);
   if(id==='s-medico-historico') setTimeout(_loadMedicoHistorico,150);
@@ -6253,6 +6209,87 @@ async function _saSubmitMedico() {
 
 // ── DADOS DINÂMICOS DO FUNCIONÁRIO ───────────────
 
+async function _loadHomeNext() {
+  const el = document.getElementById('home-next-appt-container');
+  if (!el) return;
+  try {
+    const q = _supa.from('appointments')
+      .select('*')
+      .in('status', ['pending','active'])
+      .order('created_at', { ascending: true })
+      .limit(1);
+    if (loggedSupabaseId) q.eq('user_id', loggedSupabaseId);
+    const { data } = await q;
+    const a = data?.[0];
+    if (!a) {
+      el.innerHTML = `<div style="background:var(--bg);border-radius:14px;padding:16px;text-align:center;">
+        <div style="font-size:13px;color:var(--medium);margin-bottom:8px;">Nenhuma consulta agendada</div>
+        <button onclick="goTab(1)" style="background:var(--blue);color:#fff;border:none;border-radius:10px;padding:8px 18px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;">Agendar agora</button>
+      </div>`;
+      return;
+    }
+    const ini = (a.doctor_name||'M').split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase();
+    const dt  = a.scheduled_at ? new Date(a.scheduled_at) : null;
+    const dtStr = dt ? dt.toLocaleDateString('pt-BR') + ' · ' + dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) : 'A confirmar';
+    el.innerHTML = `<div class="next-appt-card">
+      <div class="appt-top">
+        <div class="appt-avatar">${escapeHtml(ini)}</div>
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:600;color:var(--dark);">${escapeHtml(a.doctor_name||'Médico a confirmar')}</div>
+          <div style="font-size:13px;color:var(--medium);">${escapeHtml(a.specialty||'Consulta')}</div>
+        </div>
+        <span class="badge badge-blue">Agendada</span>
+      </div>
+      <div class="divider"></div>
+      <div style="display:flex;align-items:center;padding:12px 16px;gap:6px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--medium)" stroke-width="2" style="width:15px;height:15px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span style="font-size:13px;color:var(--medium);flex:1;">${escapeHtml(dtStr)} · Videochamada</span>
+        <button class="appt-enter" onclick="goTo('s-ativa')">Entrar</button>
+      </div>
+    </div>`;
+  } catch(_) {
+    el.innerHTML = '';
+  }
+}
+
+async function _loadDocumentos() {
+  const iconMap = {
+    receita:  { bg:'var(--blue-light)', stroke:'var(--blue)' },
+    atestado: { bg:'rgba(232,136,42,.1)', stroke:'var(--warning)' },
+    exame:    { bg:'rgba(46,158,110,.1)', stroke:'var(--success)' },
+  };
+  const containers = {
+    receita:  document.getElementById('docs-receitas'),
+    atestado: document.getElementById('docs-atestados'),
+    exame:    document.getElementById('docs-exames-docs'),
+  };
+  for (const [type, el] of Object.entries(containers)) {
+    if (!el) continue;
+    el.innerHTML = '<div style="padding:16px;text-align:center;color:var(--medium);font-size:13px;">Carregando...</div>';
+    try {
+      const q = _supa.from('documents').select('*').eq('type', type).order('issued_at', { ascending: false }).limit(20);
+      if (loggedSupabaseId) q.eq('user_id', loggedSupabaseId);
+      const { data } = await q;
+      if (!data?.length) { el.innerHTML = _emptyState('Nenhum documento ainda', null); continue; }
+      const { bg, stroke } = iconMap[type];
+      el.innerHTML = data.map(d => `
+        <div class="doc-item">
+          <div class="doc-icon" style="background:${bg};">
+            <svg viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="2" style="width:22px;height:22px;">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:600;color:var(--dark);">${escapeHtml(d.title||type)}</div>
+            <div style="font-size:12px;color:var(--medium);">${escapeHtml(d.doctor_name||'—')}</div>
+            <div style="font-size:11px;color:var(--light);margin-top:3px;">${d.issued_at ? new Date(d.issued_at).toLocaleDateString('pt-BR') : '—'}</div>
+          </div>
+        </div>`).join('');
+    } catch(_) { el.innerHTML = _emptyState('Nenhum documento ainda', null); }
+  }
+}
+
 function _updateDadosPessoais() {
   if (!loggedUser) return;
   const role = loggedUser.role === 'gestor' ? 'Gestor / RH' : 'Colaborador';
@@ -6280,10 +6317,9 @@ async function _loadHistorico() {
   if (!list || !loggedUser) return;
   list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--medium);font-size:13px;">Carregando...</div>';
   try {
-    const { data: appts, error } = await _supa
-      .from('appointments')
-      .select('*')
-      .order('created_at', { ascending: false });
+    const q = _supa.from('appointments').select('*').order('created_at', { ascending: false });
+    if (loggedSupabaseId) q.eq('user_id', loggedSupabaseId);
+    const { data: appts, error } = await q;
     if (error || !appts?.length) {
       list.innerHTML = _emptyState('Nenhuma consulta ainda', 'Agendar consulta');
       document.querySelector('#s-historico .stat-val') && _updateHistStats(0, 0, 0);
@@ -6327,11 +6363,9 @@ async function _loadReceitas() {
   const list = document.getElementById('receitas-list');
   if (!list) return;
   try {
-    const { data: docs } = await _supa
-      .from('documents')
-      .select('*')
-      .eq('type', 'receita')
-      .order('issued_at', { ascending: false });
+    const qr = _supa.from('documents').select('*').eq('type', 'receita').order('issued_at', { ascending: false });
+    if (loggedSupabaseId) qr.eq('user_id', loggedSupabaseId);
+    const { data: docs } = await qr;
     if (!docs?.length) {
       list.innerHTML = _emptyState('Nenhuma receita ainda', null);
       return;
@@ -6352,11 +6386,9 @@ async function _loadLaudos() {
   const list = document.getElementById('laudos-list');
   if (!list) return;
   try {
-    const { data: docs } = await _supa
-      .from('documents')
-      .select('*')
-      .eq('type', 'exame')
-      .order('issued_at', { ascending: false });
+    const ql = _supa.from('documents').select('*').eq('type', 'exame').order('issued_at', { ascending: false });
+    if (loggedSupabaseId) ql.eq('user_id', loggedSupabaseId);
+    const { data: docs } = await ql;
     if (!docs?.length) {
       list.innerHTML = _emptyState('Nenhum laudo ainda', null);
       return;
