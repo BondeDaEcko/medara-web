@@ -1262,6 +1262,41 @@ body{background:#030d1a !important;}
   .qai-box svg{width:26px !important;height:26px !important;}
   .qai-label{font-size:12px !important;}
   .qai-grid{gap:12px !important;}
+  /* ── Hover lift em todos os elementos clicáveis no desktop ── */
+  button, .btn, .menu-item, .vant-card, .hist-item, .spec-card,
+  .spec-item, .doc-item, .next-appt-card, .appt-enter, .role-opt,
+  .exec-module-card, .insight-card, .pay-item, .rec-item, .faq-q,
+  [onclick]:not(input):not(textarea), .qai-box {
+    transition: transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s ease !important;
+    cursor: pointer;
+  }
+  button:hover, .btn:hover, .menu-item:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,.12) !important;
+  }
+  .vant-card:hover, .spec-card:hover, .spec-item:hover,
+  .hist-item:hover, .doc-item:hover, .rec-item:hover, .pay-item:hover,
+  .insight-card:hover, .exec-module-card:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,.09) !important;
+  }
+  .qai-box:hover {
+    transform: translateY(-4px) scale(1.04) !important;
+    box-shadow: 0 10px 28px rgba(0,0,0,.14) !important;
+  }
+  .appt-enter:hover {
+    transform: translateY(-2px) scale(1.03) !important;
+  }
+  /* Botões destrutivos (logout, danger) — hover vermelho, não lift */
+  .logout-btn:hover, .btn-danger:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 18px rgba(229,57,53,.25) !important;
+  }
+  /* Botão primário gold — sombra dourada */
+  .btn-gold:hover {
+    box-shadow: 0 8px 24px rgba(207,160,48,.35) !important;
+  }
+
   /* IAB panel */
   #iab-panel{left:0 !important;width:100vw !important;transform:translateX(0) translateY(100%) !important;}
   #iab-panel.open{transform:translateX(0) translateY(0) !important;}
