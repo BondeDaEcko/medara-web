@@ -420,7 +420,7 @@ p{color:var(--medium);font-size:14px;line-height:1.5;}
    Cobre: iPhones SE→Plus, Samsung S/A, Pixel, qualquer Android
    Breakpoint 480px: nenhum celular moderno fica de fora
 ────────────────────────────────────── */
-@media(max-width:480px){
+@media(max-width:899px){
   body{
     padding:0;
     align-items:flex-start;
@@ -474,6 +474,7 @@ p{color:var(--medium);font-size:14px;line-height:1.5;}
 
   /* Scroll area — espaço suficiente acima do bottom nav */
   .scroll-area{ padding-bottom:calc(90px + env(safe-area-inset-bottom, 0px)) !important; }
+  .scroll-area-full{ padding-bottom:calc(40px + env(safe-area-inset-bottom, 0px)) !important; }
 
   /* IAB panel — ocupa tela toda no mobile */
   #iab-panel{
@@ -1023,7 +1024,7 @@ body{background:#030d1a !important;}
 #iab-close{width:32px;height:32px;border-radius:9px;background:#F4F7FD;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;color:var(--medium);}
 #iab-progress{height:2px;background:linear-gradient(90deg,var(--blue),var(--gold));width:0%;transition:width .4s;flex-shrink:0;}
 #iab-frame{flex:1;border:none;width:100%;}
-@media(max-width:480px){#iab-panel{width:100% !important;left:0 !important;transform:translateY(100%) !important;}
+@media(max-width:899px){#iab-panel{width:100% !important;left:0 !important;transform:translateY(100%) !important;}
 #iab-panel.open{transform:translateY(0) !important;}}
 
 /* ── SUGESTÕES INTELIGENTES (Nubank-style) ── */
@@ -1300,6 +1301,23 @@ body{background:#030d1a !important;}
   #iab-panel{left:0 !important;width:100vw !important;transform:translateX(0) translateY(100%) !important;}
   #iab-panel.open{transform:translateX(0) translateY(0) !important;}
   body.dt-vis #iab-panel{left:240px !important;width:calc(100vw - 240px) !important;}
+
+  /* Conteúdo com max-width centralizado — evita esticamento em monitores largos */
+  body.dt-vis .scroll-area,
+  body.dt-vis .scroll-area-full {
+    padding-left: max(24px, calc((100% - 860px) / 2)) !important;
+    padding-right: max(24px, calc((100% - 860px) / 2)) !important;
+  }
+
+  /* Spec-grid padding sem bottom nav */
+  .spec-grid { padding-bottom: 40px !important; }
+
+  /* Videochamada fullscreen — sem offset do sidebar quando em chamada */
+  #s-ativa { left: 0 !important; }
+  #s-medico-ativa { left: 0 !important; }
+
+  /* PWA banner respeita a sidebar */
+  body.dt-vis #pwa-banner { left: 240px !important; }
 }
 </style>
 </head>
@@ -8030,7 +8048,11 @@ const _DT_GESTOR_PARENT = {
 };
 function _dtSync(screenId){
   if(!window.matchMedia('(min-width:900px)').matches) return;
-  const noSidebar = ['s-splash','s-login','s-primeiro-acesso','s-empresas'].includes(screenId);
+  const noSidebar = [
+    's-splash','s-login','s-primeiro-acesso','s-empresas',
+    's-ativa',
+    's-medico-home','s-medico-historico','s-medico-ativa','s-medico-emitir'
+  ].includes(screenId);
   const sidebar = document.getElementById('dt-sidebar');
   if(!sidebar) return;
   if(noSidebar){
