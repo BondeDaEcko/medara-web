@@ -5049,7 +5049,7 @@ body{background:#030d1a !important;}
         <div style="padding:12px 16px;background:var(--blue-light);border-bottom:1px solid rgba(61,130,216,.1);"><span style="font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.5px;">SEGURANÇA</span></div>
         <div class="menu-item" style="padding:14px 16px;" onclick="_resetPasswordFuncionario()"><div style="width:36px;height:36px;background:rgba(61,130,216,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:12px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" style="width:18px;height:18px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><span style="flex:1;font-size:14px;font-weight:500;color:var(--dark);">Alterar senha</span><svg viewBox="0 0 24 24" fill="none" stroke="var(--light)" stroke-width="2" style="width:16px;height:16px;"><polyline points="9 18 15 12 9 6"/></svg></div>
         <div style="height:1px;background:#F0F4FA;margin-left:64px;"></div>
-        <div class="menu-item" style="padding:14px 16px;"><div style="width:36px;height:36px;background:rgba(61,130,216,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:12px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" style="width:18px;height:18px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span style="flex:1;font-size:14px;font-weight:500;color:var(--dark);">Autenticação em 2 fatores</span><span style="font-size:12px;color:var(--success);font-weight:600;">Ativo</span></div>
+        <div class="menu-item" style="padding:14px 16px;"><div style="width:36px;height:36px;background:rgba(61,130,216,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:12px;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" style="width:18px;height:18px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span style="flex:1;font-size:14px;font-weight:500;color:var(--dark);">Autenticação em 2 fatores</span><span style="font-size:12px;color:var(--medium);">Em breve</span></div>
       </div>
       <div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05);margin-bottom:20px;">
         <div style="padding:12px 16px;background:rgba(229,57,53,.05);border-bottom:1px solid rgba(229,57,53,.1);"><span style="font-size:12px;font-weight:700;color:var(--danger);letter-spacing:.5px;">DADOS PESSOAIS</span></div>
@@ -5842,7 +5842,7 @@ function buildDatePicker(){
     el.onclick = function(){
       document.querySelectorAll('.date-day').forEach(x=>x.classList.remove('active'));
       this.classList.add('active');
-      document.getElementById('sum-date').textContent = `${label}, ${d.getDate()} de ${months[d.getMonth()]}`;
+      const _sd1=document.getElementById('sum-date'); _sd1.textContent = `${label}, ${d.getDate()} de ${months[d.getMonth()]}`; _sd1.dataset.isoDate = d.toISOString().slice(0,10);
     };
     if(i===1){
       const months2=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
@@ -5854,6 +5854,17 @@ function buildDatePicker(){
 
 let _activeChannel = null;
 
+// Mapa seguro para consultas da home — evita XSS via onclick
+const _homeApptMap = {};
+
+// Entrar na consulta a partir da próxima consulta da home (sem XSS)
+function _homeEntrar(apptId) {
+  const a = _homeApptMap[apptId];
+  if (!a) { showToast('Consulta não encontrada. Recarregue a página.', 'error'); return; }
+  if (a.agora_channel) _activeChannel = a.agora_channel;
+  entrarConsulta(a.specialty || 'Consulta', a.doctor_name || 'Médico');
+}
+
 async function confirmarAgendamento(){
   const doc        = document.getElementById('sum-doc')?.textContent  || '';
   const time       = document.getElementById('sum-time')?.textContent || '';
@@ -5864,37 +5875,52 @@ async function confirmarAgendamento(){
 
   // Constrói scheduled_at: hoje/amanhã + horário selecionado
   let scheduledAt = null;
+  // Constrói scheduled_at com data ISO do dataset (mais robusto que parsear texto)
+  const isoDate = document.getElementById('sum-date')?.dataset?.isoDate;
   try {
-    const [h, m]   = time.split(':').map(Number);
-    const base     = new Date();
-    if (dateStr.toLowerCase().startsWith('amanhã')) base.setDate(base.getDate() + 1);
-    base.setHours(h || 0, m || 0, 0, 0);
-    scheduledAt = base.toISOString();
+    const timeParts = time.match(/^(\d{1,2}):(\d{2})$/);
+    if (isoDate && timeParts) {
+      const base = new Date(`${isoDate}T${timeParts[1].padStart(2,'0')}:${timeParts[2]}:00`);
+      if (!isNaN(base)) scheduledAt = base.toISOString();
+    } else if (time) {
+      const [h, m] = time.split(':').map(Number);
+      const base = new Date();
+      if (dateStr.toLowerCase().startsWith('amanhã')) base.setDate(base.getDate() + 1);
+      if (!isNaN(h) && !isNaN(m)) { base.setHours(h, m, 0, 0); scheduledAt = base.toISOString(); }
+    }
   } catch(_) {}
 
   const channel = 'mc' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
   _activeChannel = channel;
 
   try {
-    const { data: { user } } = await _supa.auth.getUser();
-    // Usa company_id do profile (não busca por nome — evita falha por divergência)
+    const { data: { user }, error: authErr } = await _supa.auth.getUser();
     const companyId = loggedUser?.company_id;
-    if (user && companyId) {
-      await _supa.from('appointments').insert({
-        company_id:    companyId,
-        user_id:       user.id,
-        specialty,
-        doctor_name:   doctorName || null,
-        type:          'scheduled',
-        status:        'pending',
-        agora_channel: channel,
-        scheduled_at:  scheduledAt,
-        notes:         time
-      });
-    }
-  } catch(_) {}
 
-  showToast('Consulta agendada! ' + (doctorName || specialty) + (time ? ' às ' + time : ''));
+    if (!user || authErr) throw new Error('Sessão expirada. Faça login novamente.');
+    if (!companyId) throw new Error('Empresa não identificada. Faça login novamente.');
+
+    const { error: insertErr } = await _supa.from('appointments').insert({
+      company_id:    companyId,
+      user_id:       user.id,
+      specialty,
+      doctor_name:   doctorName || null,
+      type:          'scheduled',
+      status:        'pending',
+      agora_channel: channel,
+      scheduled_at:  scheduledAt,
+      notes:         time
+    });
+
+    if (insertErr) throw insertErr;
+  } catch(e) {
+    const btn2 = document.getElementById('login-btn');
+    showToast('Erro ao agendar: ' + (e.message || 'tente novamente'), 'error');
+    if(btn2){ btn2.disabled = false; btn2.textContent = btn2._origText || 'Confirmar'; }
+    return;
+  }
+
+  showToast('Consulta agendada! ' + (doctorName || specialty) + (time ? ' às ' + time : ''), 'success');
   setTimeout(()=>goTo('s-historico'), 800);
 }
 
@@ -6429,14 +6455,15 @@ async function _loadHomeNext() {
   const el = document.getElementById('home-next-appt-container');
   if (!el) return;
   try {
-    const q = _supa.from('appointments')
+    let q = _supa.from('appointments')
       .select('*')
       .in('status', ['pending','active'])
       .order('created_at', { ascending: true })
       .limit(1);
-    if (loggedSupabaseId) q.eq('user_id', loggedSupabaseId);
+    if (loggedSupabaseId) q = q.eq('user_id', loggedSupabaseId);
     const { data } = await q;
     const a = data?.[0];
+    if (a) _homeApptMap[a.id] = a; // popula mapa seguro
     if (!a) {
       el.innerHTML = `<div style="background:var(--bg);border-radius:14px;padding:16px;text-align:center;">
         <div style="font-size:13px;color:var(--medium);margin-bottom:8px;">Nenhuma consulta agendada</div>
@@ -6460,9 +6487,9 @@ async function _loadHomeNext() {
       <div style="display:flex;align-items:center;padding:12px 16px;gap:6px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="var(--medium)" stroke-width="2" style="width:15px;height:15px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         <span style="font-size:13px;color:var(--medium);flex:1;">${escapeHtml(dtStr)} · Videochamada</span>
-        ${a.status === 'active'
-          ? `<button class="appt-enter" onclick="entrarConsulta('${escapeHtml(a.specialty||'Consulta')}','${escapeHtml(a.doctor_name||'Médico')}')">Entrar</button>`
-          : `<span style="font-size:11px;color:var(--medium);padding:6px 10px;background:var(--bg);border-radius:10px;">Aguardando</span>`
+        ${(a.status === 'active' || (a.status === 'pending' && a.scheduled_at && new Date(a.scheduled_at) <= new Date()))
+          ? `<button class="appt-enter" data-appt-id="${escapeHtml(a.id)}" onclick="_homeEntrar(this.dataset.apptId)">Entrar</button>`
+          : `<span style="font-size:11px;color:var(--medium);padding:6px 10px;background:var(--bg);border-radius:10px;">Aguardando médico</span>`
         }
       </div>
     </div>`;
@@ -6486,8 +6513,8 @@ async function _loadDocumentos() {
     if (!el) continue;
     el.innerHTML = '<div style="padding:16px;text-align:center;color:var(--medium);font-size:13px;">Carregando...</div>';
     try {
-      const q = _supa.from('documents').select('*').eq('type', type).order('issued_at', { ascending: false }).limit(20);
-      if (loggedSupabaseId) q.eq('user_id', loggedSupabaseId);
+      let q = _supa.from('documents').select('*').eq('type', type).order('issued_at', { ascending: false }).limit(20);
+      if (loggedSupabaseId) q = q.eq('user_id', loggedSupabaseId);
       const { data } = await q;
       if (!data?.length) { el.innerHTML = _emptyState('Nenhum documento ainda', null); continue; }
       const { bg, stroke } = iconMap[type];
@@ -6536,8 +6563,8 @@ async function _loadHistorico() {
   if (!list || !loggedUser) return;
   list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--medium);font-size:13px;">Carregando...</div>';
   try {
-    const q = _supa.from('appointments').select('*').order('created_at', { ascending: false });
-    if (loggedSupabaseId) q.eq('user_id', loggedSupabaseId);
+    let q = _supa.from('appointments').select('*').order('created_at', { ascending: false });
+    if (loggedSupabaseId) q = q.eq('user_id', loggedSupabaseId);
     const { data: appts, error } = await q;
     if (error || !appts?.length) {
       list.innerHTML = _emptyState('Nenhuma consulta ainda', 'Agendar consulta');
@@ -6583,8 +6610,8 @@ async function _loadReceitas() {
   const list = document.getElementById('receitas-list');
   if (!list) return;
   try {
-    const qr = _supa.from('documents').select('*').eq('type', 'receita').order('issued_at', { ascending: false });
-    if (loggedSupabaseId) qr.eq('user_id', loggedSupabaseId);
+    let qr = _supa.from('documents').select('*').eq('type', 'receita').order('issued_at', { ascending: false });
+    if (loggedSupabaseId) qr = qr.eq('user_id', loggedSupabaseId);
     const { data: docs } = await qr;
     if (!docs?.length) {
       list.innerHTML = _emptyState('Nenhuma receita ainda', null);
@@ -6606,8 +6633,8 @@ async function _loadLaudos() {
   const list = document.getElementById('laudos-list');
   if (!list) return;
   try {
-    const ql = _supa.from('documents').select('*').eq('type', 'exame').order('issued_at', { ascending: false });
-    if (loggedSupabaseId) ql.eq('user_id', loggedSupabaseId);
+    let ql = _supa.from('documents').select('*').eq('type', 'exame').order('issued_at', { ascending: false });
+    if (loggedSupabaseId) ql = ql.eq('user_id', loggedSupabaseId);
     const { data: docs } = await ql;
     if (!docs?.length) {
       list.innerHTML = _emptyState('Nenhum laudo ainda', null);
@@ -8014,7 +8041,7 @@ async function saveEsocialConfig(){
   btn.style.boxShadow  = '0 8px 28px rgba(34,168,104,.5)';
   btn.style.opacity    = '1';
   btn.style.pointerEvents = 'auto';
-  txt.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:18px;height:18px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>&nbsp;Conectado com sucesso!';
+  txt.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:18px;height:18px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>&nbsp;Modo Demonstração';
   // Update header status
   const dot  = document.getElementById('esocial-status-dot');
   const stxt = document.getElementById('esocial-status-txt');
@@ -8027,7 +8054,7 @@ async function saveEsocialConfig(){
   // Update perfil badge
   const cfgBadge = document.getElementById('esocial-cfg-badge');
   if(cfgBadge) cfgBadge.style.display = 'inline-block';
-  showToast('eSocial conectado! A IA MEDARA já acessa seus dados.', 'success');
+  showToast('eSocial configurado em modo demonstração. Integração real em breve.', 'success');
 }
 // ─── END ESOCIAL CONFIG ───
 
@@ -8113,8 +8140,13 @@ async function _verifyAccess(screenId) {
   try {
     const { data: { user }, error } = await _supa.auth.getUser();
     if (error || !user) {
-      // Se há sessão local (modo fallback/demo), confia sem expulsar
-      if (loggedUser) return true;
+      // Fallback local: verifica role do loggedUser em vez de confiar cegamente
+      if (loggedUser) {
+        if (screenId === 's-superadmin') return loggedEmail === _SA_EMAIL;
+        if (_GESTOR_ONLY.has(screenId) || screenId.startsWith('s-gestor-')) return loggedUser.role === 'gestor';
+        if (_MEDICO_ONLY.has(screenId) || screenId.startsWith('s-medico-')) return loggedUser.role === 'medico';
+        return true;
+      }
       doLogout(); return false;
     }
     if (screenId === 's-superadmin') return user.email === _SA_EMAIL;
