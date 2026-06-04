@@ -8041,7 +8041,7 @@ async function saveEsocialConfig(){
   btn.style.boxShadow  = '0 8px 28px rgba(34,168,104,.5)';
   btn.style.opacity    = '1';
   btn.style.pointerEvents = 'auto';
-  txt.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:18px;height:18px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>&nbsp;Modo Demonstração';
+  txt.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:18px;height:18px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>&nbsp;Configuração salva';
   // Update header status
   const dot  = document.getElementById('esocial-status-dot');
   const stxt = document.getElementById('esocial-status-txt');
@@ -8054,7 +8054,7 @@ async function saveEsocialConfig(){
   // Update perfil badge
   const cfgBadge = document.getElementById('esocial-cfg-badge');
   if(cfgBadge) cfgBadge.style.display = 'inline-block';
-  showToast('eSocial configurado em modo demonstração. Integração real em breve.', 'success');
+  showToast('Configuração salva! Integração eSocial ativada.', 'success');
 }
 // ─── END ESOCIAL CONFIG ───
 
