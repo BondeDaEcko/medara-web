@@ -16,10 +16,10 @@
 <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144.png">
 <link rel="apple-touch-icon" sizes="128x128" href="/icons/icon-128.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-96.png">
-<!-- Supabase JS — defer: necessário antes do app iniciar, não bloqueia parsing -->
+<!-- Supabase JS — sem defer/async: precisa estar disponível quando o app iniciar -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"
   integrity="sha384-+exuGmToMCgcfiTDu+P+1aCmlH2Mis7lstkjVmVHdwvJqtNNqhxMreqsIe6bVstn"
-  crossorigin="anonymous" defer></script>
+  crossorigin="anonymous"></script>
 <!-- Scripts pesados — async: carregam em background, não bloqueiam a aba -->
 <script src="https://download.agora.io/sdk/release/AgoraRTC_N-4.20.0.js"
   integrity="sha384-vvrWy30L5pS73SZopHhspS3Yc/PyQmG0V80Br7kCOURjTCM5ML0lZ/eKC/2GJxgh"
