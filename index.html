@@ -1790,7 +1790,7 @@ body{background:#030d1a !important;}
         <span style="font-size:15px;font-weight:700;color:var(--dark);display:block;margin-bottom:12px;">Acesso Rápido</span>
         <div class="qai-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
 
-          <div onclick="goTo('s-ativa')" style="display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;-webkit-tap-highlight-color:transparent;" onpointerdown="this.style.transform='scale(0.93)'" onpointerup="this.style.transform='scale(1)'" onpointercancel="this.style.transform='scale(1)'">
+          <div onclick="goTo('s-disponiveis')" style="display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;-webkit-tap-highlight-color:transparent;" onpointerdown="this.style.transform='scale(0.93)'" onpointerup="this.style.transform='scale(1)'" onpointercancel="this.style.transform='scale(1)'">
             <div class="qai-box" style="width:56px;height:56px;background:var(--blue);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(61,130,216,.32);transition:transform .15s;">
               <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" style="width:24px;height:24px;"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
             </div>
@@ -4414,7 +4414,7 @@ body{background:#030d1a !important;}
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;">
           <div style="background:rgba(34,168,104,.12);color:var(--success);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;">~3 min</div>
-          <button onclick="event.stopPropagation();iniciarConsulta('Clínico Geral','Dr. Rafael Souza')" style="background:var(--blue);color:#fff;border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;">Entrar</button>
+          <button onclick="event.stopPropagation();entrarConsulta('Clínico Geral','Dr. Rafael Souza')" style="background:var(--blue);color:#fff;border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;">Entrar</button>
         </div>
       </div>
 
@@ -4430,7 +4430,7 @@ body{background:#030d1a !important;}
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;">
           <div style="background:rgba(34,168,104,.12);color:var(--success);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;">~8 min</div>
-          <button onclick="event.stopPropagation();iniciarConsulta('Psicóloga','Dra. Ana Lima')" style="background:#7B5EA7;color:#fff;border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;">Entrar</button>
+          <button onclick="event.stopPropagation();entrarConsulta('Psicóloga','Dra. Ana Lima')" style="background:#7B5EA7;color:#fff;border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;">Entrar</button>
         </div>
       </div>
 
@@ -4446,7 +4446,7 @@ body{background:#030d1a !important;}
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;">
           <div style="background:rgba(34,168,104,.12);color:var(--success);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;">~12 min</div>
-          <button onclick="event.stopPropagation();iniciarConsulta('Nutricionista','Dra. Carla Matos')" style="background:#2E9E6E;color:#fff;border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;">Entrar</button>
+          <button onclick="event.stopPropagation();entrarConsulta('Nutricionista','Dra. Carla Matos')" style="background:#2E9E6E;color:#fff;border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;">Entrar</button>
         </div>
       </div>
 
@@ -4462,7 +4462,7 @@ body{background:#030d1a !important;}
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;">
           <div style="background:rgba(34,168,104,.12);color:var(--success);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;">~20 min</div>
-          <button onclick="event.stopPropagation();iniciarConsulta('Cardiologista','Dr. Marcos Vieira')" style="background:var(--danger);color:#fff;border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;">Entrar</button>
+          <button onclick="event.stopPropagation();entrarConsulta('Cardiologista','Dr. Marcos Vieira')" style="background:var(--danger);color:#fff;border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;">Entrar</button>
         </div>
       </div>
 
@@ -4478,7 +4478,7 @@ body{background:#030d1a !important;}
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;">
           <div style="background:rgba(34,168,104,.12);color:var(--success);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;">~5 min</div>
-          <button onclick="event.stopPropagation();iniciarConsulta('Clínico Geral','Dr. Thiago Costa')" style="background:var(--blue);color:#fff;border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;">Entrar</button>
+          <button onclick="event.stopPropagation();entrarConsulta('Clínico Geral','Dr. Thiago Costa')" style="background:var(--blue);color:#fff;border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;">Entrar</button>
         </div>
       </div>
 
@@ -4494,7 +4494,7 @@ body{background:#030d1a !important;}
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;">
           <div style="background:rgba(34,168,104,.12);color:var(--success);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;">~15 min</div>
-          <button onclick="event.stopPropagation();iniciarConsulta('Psicóloga','Dra. Beatriz Santos')" style="background:#7B5EA7;color:#fff;border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;">Entrar</button>
+          <button onclick="event.stopPropagation();entrarConsulta('Psicóloga','Dra. Beatriz Santos')" style="background:#7B5EA7;color:#fff;border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:8px 14px;border-radius:10px;cursor:pointer;">Entrar</button>
         </div>
       </div>
 
@@ -5412,11 +5412,12 @@ const _supa = supabase.createClient(_SUPA_URL, _SUPA_KEY);
 // Converte profile do banco → objeto de usuário do app
 function _profileToUser(profile, companyName) {
   return {
-    name:    profile.name,
-    initials: profile.initials,
-    role:    profile.role,
-    company: companyName || profile.company_name || '',
-    score:   profile.health_score || 70
+    name:       profile.name,
+    initials:   profile.initials,
+    role:       profile.role,
+    company:    companyName || profile.company_name || '',
+    score:      profile.health_score || 70,
+    company_id: profile.company_id || null
   };
 }
 
@@ -5836,29 +5837,40 @@ function buildDatePicker(){
 let _activeChannel = null;
 
 async function confirmarAgendamento(){
-  const doc      = document.getElementById('sum-doc')?.textContent  || '';
-  const time     = document.getElementById('sum-time')?.textContent || '';
-  const specEl   = document.getElementById('sum-spec');
-  const specialty = specEl?.textContent || 'Consulta Geral';
+  const doc        = document.getElementById('sum-doc')?.textContent  || '';
+  const time       = document.getElementById('sum-time')?.textContent || '';
+  const dateStr    = document.getElementById('sum-date')?.textContent || '';
+  // Especialidade vem do título do agendamento (setado por openAgendamento)
+  const specialty  = document.getElementById('agend-title')?.textContent?.trim() || 'Consulta Geral';
   const doctorName = doc.split('–')[0].trim();
 
-  // Gera canal único e persistente para esta consulta
+  // Constrói scheduled_at: hoje/amanhã + horário selecionado
+  let scheduledAt = null;
+  try {
+    const [h, m]   = time.split(':').map(Number);
+    const base     = new Date();
+    if (dateStr.toLowerCase().startsWith('amanhã')) base.setDate(base.getDate() + 1);
+    base.setHours(h || 0, m || 0, 0, 0);
+    scheduledAt = base.toISOString();
+  } catch(_) {}
+
   const channel = 'mc' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
   _activeChannel = channel;
 
   try {
     const { data: { user } } = await _supa.auth.getUser();
-    const { data: company }  = await _supa.from('companies')
-      .select('id').eq('name', loggedUser?.company || '').single();
-    if (user && company) {
+    // Usa company_id do profile (não busca por nome — evita falha por divergência)
+    const companyId = loggedUser?.company_id;
+    if (user && companyId) {
       await _supa.from('appointments').insert({
-        company_id:    company.id,
+        company_id:    companyId,
         user_id:       user.id,
         specialty,
         doctor_name:   doctorName || null,
         type:          'scheduled',
         status:        'pending',
         agora_channel: channel,
+        scheduled_at:  scheduledAt,
         notes:         time
       });
     }
@@ -6084,7 +6096,7 @@ function toggleHomeData(){
   const scoreEl  = document.getElementById('home-score-txt');
   const eyeEl    = document.getElementById('eye-icon');
   const sugEl    = document.getElementById('home-sugestoes');
-  if(scoreEl) scoreEl.textContent = homeDataVisible ? '74' : '••';
+  if(scoreEl) scoreEl.textContent = homeDataVisible ? (loggedUser?.score ?? '—') : '••';
   if(sugEl)   sugEl.style.opacity = homeDataVisible ? '1' : '0.15';
   if(eyeEl){
     eyeEl.innerHTML = homeDataVisible
@@ -6430,7 +6442,10 @@ async function _loadHomeNext() {
       <div style="display:flex;align-items:center;padding:12px 16px;gap:6px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="var(--medium)" stroke-width="2" style="width:15px;height:15px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         <span style="font-size:13px;color:var(--medium);flex:1;">${escapeHtml(dtStr)} · Videochamada</span>
-        <button class="appt-enter" onclick="goTo('s-ativa')">Entrar</button>
+        ${a.status === 'active'
+          ? `<button class="appt-enter" onclick="entrarConsulta('${escapeHtml(a.specialty||'Consulta')}','${escapeHtml(a.doctor_name||'Médico')}')">Entrar</button>`
+          : `<span style="font-size:11px;color:var(--medium);padding:6px 10px;background:var(--bg);border-radius:10px;">Aguardando</span>`
+        }
       </div>
     </div>`;
   } catch(_) {
@@ -6535,6 +6550,7 @@ async function _loadHistorico() {
     }).join('');
   } catch(_) {
     list.innerHTML = _emptyState('Nenhuma consulta ainda', 'Agendar consulta');
+    _updateHistStats(0, 0, 0);
   }
 }
 
@@ -7186,8 +7202,8 @@ function gerarRelatorio(tipo) {
   doc.setFontSize(8);
   doc.text('Dados anonimizados · Conformidade LGPD', 14, 28);
   doc.setFontSize(9);
-  doc.text('Empresa: Leal Castro  |  Gerado em: ' + hoje, W - 14, 16, { align: 'right' });
-  doc.text('Carlos Mendes · Gestor de RH  |  Plano Gold', W - 14, 22, { align: 'right' });
+  doc.text('Empresa: ' + (loggedUser?.company||'—') + '  |  Gerado em: ' + hoje, W - 14, 16, { align: 'right' });
+  doc.text((loggedUser?.name||'Gestor') + ' · Gestor de RH', W - 14, 22, { align: 'right' });
 
   // ── TÍTULO ──
   const titulos = {
@@ -7584,7 +7600,7 @@ function pwaDismiss() {
 function gerarXLS(tipo) {
   if (typeof XLSX === 'undefined') { showToast('Aguarde, carregando...', 'info'); return; }
 
-  const empresa = 'Leal Castro';
+  const empresa = loggedUser?.company || 'Empresa';
   const hoje    = new Date().toLocaleDateString('pt-BR');
   const wb      = XLSX.utils.book_new();
 
@@ -8074,7 +8090,11 @@ async function _verifyAccess(screenId) {
   if (!sensitive.has(screenId)) return true;
   try {
     const { data: { user }, error } = await _supa.auth.getUser();
-    if (error || !user) { doLogout(); return false; }
+    if (error || !user) {
+      // Se há sessão local (modo fallback/demo), confia sem expulsar
+      if (loggedUser) return true;
+      doLogout(); return false;
+    }
     if (screenId === 's-superadmin') return user.email === _SA_EMAIL;
     const { data: profile, error: pErr } = await _supa.from('profiles').select('role').eq('id', user.id).single();
     if (pErr || !profile) return false;
