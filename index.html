@@ -2414,6 +2414,9 @@ body{background:#030d1a !important;}
   <div class="screen" id="s-gestor-sst">
     <div class="gestor-header">
       <div style="display:flex;align-items:center;gap:10px;">
+        <button onclick="goBack('s-gestor-home')" style="width:34px;height:34px;background:rgba(255,255,255,.15);border:none;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" style="width:18px;height:18px;"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
         <div>
           <div style="font-size:18px;font-weight:800;color:#fff;">SST & Saúde Ocupacional</div>
           <div style="font-size:12px;color:rgba(255,255,255,.6);">Leal Castro · 48 colaboradores</div>
@@ -5317,15 +5320,22 @@ function runSplash(){
 
   // 4 — checa sessão salva; entra direto ou vai para login (3100ms)
   setTimeout(async ()=>{
+    // Corta qualquer espera do Supabase em 4s: se o servidor/token travar
+    // (ex.: JWT_SECRET rotacionado, supabase-js preso renovando sessão),
+    // o app NUNCA fica girando — cai no fallback/login.
+    const _timeout = (ms) => new Promise((_, rej)=>setTimeout(()=>rej(new Error('supabase-timeout')), ms));
     try {
-      // Verifica sessão ativa no Supabase
-      const { data: { session } } = await _supa.auth.getSession();
+      if (!_supa) throw new Error('supabase-indisponivel');
+      // Verifica sessão ativa no Supabase (com guarda de timeout)
+      const { data: { session } } = await Promise.race([ _supa.auth.getSession(), _timeout(4000) ]);
       if (session?.user) {
-        const { data: profile } = await _supa
-          .from('profiles')
-          .select('*, companies(name, active, payment_status)')
-          .eq('id', session.user.id)
-          .single();
+        const { data: profile } = await Promise.race([
+          _supa.from('profiles')
+            .select('*, companies(name, active, payment_status)')
+            .eq('id', session.user.id)
+            .single(),
+          _timeout(4000)
+        ]);
         if (profile) {
           if (profile.companies?.active === false) {
             goTo('s-login'); return;
@@ -5335,7 +5345,7 @@ function runSplash(){
           return;
         }
       }
-    } catch(_) { /* Supabase indisponível */ }
+    } catch(_) { /* Supabase indisponível ou travado — segue para fallback */ }
 
     // Fallback: sessionStorage local
     try {
@@ -5424,8 +5434,22 @@ let loggedSupabaseId = null; // UUID do Supabase para filtrar dados por usuário
 
 // ── SUPABASE CLIENT ───────────────────────────────
 const _SUPA_URL = 'https://medara-supabase.dxqf51.easypanel.host';
-const _SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzgwNjE0NTE4LCJleHAiOjIwOTU5NzQ1MTh9.ZAxo2Euis3GeLJZxgv-P9BHLnJXJxwwRP4tYya8PeAQ';
-const _supa = supabase.createClient(_SUPA_URL, _SUPA_KEY);
+// ⚠️ TEMPORÁRIO: chave-demo padrão (o servidor easypanel ainda valida pelo segredo JWT demo).
+// Restaura o app, mas o banco fica exposto. Rotacionar JWT_SECRET no easypanel e trocar por chave real.
+// Ver memória: medara-supabase-jwt-incident.
+const _SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE';
+// Blindagem: se o SDK do Supabase não carregou (CDN bloqueado / integrity divergente),
+// NÃO deixa o erro abortar o resto do script — o app precisa pelo menos chegar no login.
+let _supa = null;
+try {
+  if (typeof supabase !== 'undefined' && supabase.createClient) {
+    _supa = supabase.createClient(_SUPA_URL, _SUPA_KEY);
+  } else {
+    console.error('Supabase SDK não disponível — app seguirá em modo offline/login.');
+  }
+} catch(e) {
+  console.error('Falha ao criar client Supabase:', e);
+}
 
 // Converte profile do banco → objeto de usuário do app
 function _profileToUser(profile, companyName) {
