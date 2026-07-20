@@ -1310,7 +1310,13 @@ body{background:#030d1a !important;}
   }
 
   /* Grids mais largos no desktop — layout mobile (2 col) vira 3/4 col com mais respiro */
-  body.dt-vis .dt-grid-3 { grid-template-columns: repeat(3, 1fr) !important; gap: 14px !important; }
+  /* 6 colunas com cards de span 2 = 3 por linha; permite centralizar linha final incompleta */
+  body.dt-vis .dt-grid-3 { grid-template-columns: repeat(6, 1fr) !important; gap: 14px !important; }
+  body.dt-vis .dt-grid-3 > * { grid-column: span 2; }
+  /* Sobram 2 na última linha → desloca o 1º órfão pra coluna 2 (centraliza o par) */
+  body.dt-vis .dt-grid-3 > *:nth-child(3n+1):nth-last-child(2) { grid-column: 2 / span 2; }
+  /* Sobra 1 na última linha → centraliza no meio */
+  body.dt-vis .dt-grid-3 > *:nth-child(3n+1):last-child { grid-column: 3 / span 2; }
   body.dt-vis .dt-grid-4 { grid-template-columns: repeat(4, 1fr) !important; gap: 14px !important; }
   body.dt-vis .exec-module-card { padding: 20px 18px !important; }
 
