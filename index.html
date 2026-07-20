@@ -1305,9 +1305,14 @@ body{background:#030d1a !important;}
   /* Conteúdo com max-width centralizado — evita esticamento em monitores largos */
   body.dt-vis .scroll-area,
   body.dt-vis .scroll-area-full {
-    padding-left: max(24px, calc((100% - 860px) / 2)) !important;
-    padding-right: max(24px, calc((100% - 860px) / 2)) !important;
+    padding-left: max(32px, calc((100% - 1180px) / 2)) !important;
+    padding-right: max(32px, calc((100% - 1180px) / 2)) !important;
   }
+
+  /* Grids mais largos no desktop — layout mobile (2 col) vira 3/4 col com mais respiro */
+  body.dt-vis .dt-grid-3 { grid-template-columns: repeat(3, 1fr) !important; gap: 14px !important; }
+  body.dt-vis .dt-grid-4 { grid-template-columns: repeat(4, 1fr) !important; gap: 14px !important; }
+  body.dt-vis .exec-module-card { padding: 20px 18px !important; }
 
   /* Spec-grid padding sem bottom nav */
   .spec-grid { padding-bottom: 40px !important; }
@@ -2237,7 +2242,7 @@ body{background:#030d1a !important;}
           <div class="skel" style="height:56px;border-radius:12px;"></div><div class="skel" style="height:56px;border-radius:12px;"></div><div class="skel" style="height:56px;border-radius:12px;"></div><div class="skel" style="height:56px;border-radius:12px;"></div>
         </div>
         <div class="skel" style="height:94px;margin-bottom:14px;border-radius:16px;"></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="dt-grid-3" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
           <div class="skel" style="height:80px;border-radius:14px;"></div><div class="skel" style="height:80px;border-radius:14px;"></div>
           <div class="skel" style="height:80px;border-radius:14px;"></div><div class="skel" style="height:80px;border-radius:14px;"></div>
           <div class="skel" style="height:80px;border-radius:14px;"></div><div class="skel" style="height:80px;border-radius:14px;"></div>
@@ -2251,7 +2256,7 @@ body{background:#030d1a !important;}
       </div>
 
       <!-- 4 KPI pills -->
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px;">
+      <div class="dt-grid-4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px;">
         <div style="background:#fff;border-radius:12px;padding:10px 6px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05);">
           <div style="font-size:17px;font-weight:900;color:var(--blue);">48</div>
           <div style="font-size:9px;color:var(--medium);margin-top:2px;line-height:1.3;">Ativos</div>
@@ -2297,7 +2302,7 @@ body{background:#030d1a !important;}
 
       <!-- Módulos grid -->
       <div style="font-size:10px;font-weight:700;color:var(--medium);letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px;">Módulos da Plataforma</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;">
+      <div class="dt-grid-3" style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;">
 
         <div onclick="goTo('s-painel-exec')" class="exec-module-card" style="border-color:rgba(61,130,216,.15);">
           <div style="width:38px;height:38px;background:var(--blue-light);border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:9px;">
@@ -3308,7 +3313,7 @@ body{background:#030d1a !important;}
 
       <!-- KPI grid 2x2 -->
       <div style="font-size:10px;font-weight:700;color:var(--medium);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px;">Indicadores Principais</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;">
+      <div class="dt-grid-4" style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;">
         <div style="background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.05);">
           <div style="font-size:10px;color:var(--medium);margin-bottom:6px;font-weight:600;">Colaboradores Ativos</div>
           <div style="font-size:26px;font-weight:900;color:var(--dark);line-height:1;">48</div>
