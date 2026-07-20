@@ -1365,6 +1365,21 @@ body{background:#030d1a !important;}
 .btn-blue{background:linear-gradient(135deg,#4A90E8,#2D6FC8);}
 .btn-blue:hover{background:linear-gradient(135deg,#3D82D8,#2563B8);}
 
+/* ── Identidade por módulo — a cor do card permeia a tela inteira ── */
+#s-painel-exec{--accent:#3D82D8;--accent-soft:rgba(61,130,216,.07);}
+#s-esocial,#s-esocial-config{--accent:#7C3AED;--accent-soft:rgba(124,58,237,.07);}
+#s-saude-emocional{--accent:#C2185B;--accent-soft:rgba(194,24,91,.07);}
+#s-risco-trabalhista{--accent:#C44B00;--accent-soft:rgba(196,75,0,.07);}
+#s-afastamentos{--accent:#D97706;--accent-soft:rgba(217,119,6,.08);}
+#s-relatorios{--accent:#22A868;--accent-soft:rgba(34,168,104,.07);}
+#s-gestor-sst{--accent:#E53935;--accent-soft:rgba(229,57,53,.06);}
+#s-score-medara{--accent:#CFA030;--accent-soft:rgba(207,160,48,.08);}
+
+/* Lavagem suave da cor do módulo no topo do conteúdo */
+.screen .scroll-area{background:linear-gradient(180deg,var(--accent-soft,transparent),transparent 340px);}
+/* Títulos de seção na cor do módulo */
+.screen .scroll-area div[style*="letter-spacing:.8px"]{color:var(--accent,var(--medium)) !important;}
+
 /* Acessibilidade — usuários que preferem menos movimento */
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{
@@ -3792,7 +3807,7 @@ body{background:#030d1a !important;}
 
   <!-- ============ MODULE: AFASTAMENTOS ============ -->
   <div class="screen" id="s-afastamentos">
-    <div style="background:linear-gradient(150deg,#061528,#0f2d5c,#3d82d8);padding:44px 20px 20px;flex-shrink:0;position:relative;overflow:hidden;">
+    <div style="background:linear-gradient(150deg,#2A1400,#6B3A00,#D97706);padding:44px 20px 20px;flex-shrink:0;position:relative;overflow:hidden;">
       <div style="position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.04);top:-60px;right:-30px;pointer-events:none;"></div>
       <div style="display:flex;align-items:center;gap:10px;position:relative;">
         <button onclick="goBack()" style="width:34px;height:34px;background:rgba(255,255,255,.14);border:none;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
