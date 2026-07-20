@@ -2261,9 +2261,6 @@ body{background:#030d1a !important;}
           <div style="font-size:17px;font-weight:800;color:#fff;letter-spacing:.3px;">MEDARA Empresarial</div>
           <div style="font-size:11px;color:rgba(255,255,255,.6);">Leal Castro · Plano Gold · 48 colaboradores</div>
         </div>
-        <div style="background:rgba(255,193,7,.18);border:1px solid rgba(255,193,7,.4);border-radius:20px;padding:5px 11px;flex-shrink:0;">
-          <span style="font-size:14px;font-weight:900;color:#FFC107;">68</span><span style="font-size:10px;color:rgba(255,193,7,.7);font-weight:600;">/100</span>
-        </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <div>
@@ -2299,9 +2296,9 @@ body{background:#030d1a !important;}
       </div>
     </div>
     <div class="scroll-area stagger" style="padding:14px 18px 0;">
-      <div style="background:rgba(61,130,216,.07);border:1px solid rgba(61,130,216,.16);border-radius:12px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span style="font-size:11px;color:var(--blue);font-weight:500;">Dados anonimizados · Em conformidade com LGPD · Art. 11 LGPD</span>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;opacity:.75;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--light)" stroke-width="2" style="width:11px;height:11px;flex-shrink:0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span style="font-size:10px;color:var(--light);font-weight:500;">Dados anonimizados · LGPD Art. 11</span>
       </div>
 
       <!-- 4 KPI pills -->
@@ -2324,18 +2321,21 @@ body{background:#030d1a !important;}
         </div>
       </div>
 
-      <!-- Score bar -->
-      <div style="background:linear-gradient(135deg,rgba(61,130,216,.09),rgba(61,130,216,.03));border:1.5px solid rgba(61,130,216,.18);border-radius:16px;padding:16px 18px;margin-bottom:14px;">
+      <!-- Score bar (clicável → detalhe das 6 dimensões) -->
+      <div onclick="goTo('s-score-medara')" class="exec-module-card" style="background:linear-gradient(135deg,rgba(61,130,216,.09),rgba(61,130,216,.03));border:1.5px solid rgba(61,130,216,.18);border-radius:16px;padding:16px 18px;margin-bottom:14px;cursor:pointer;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
           <div>
             <div style="font-size:10px;font-weight:700;color:var(--blue);letter-spacing:.6px;text-transform:uppercase;margin-bottom:3px;">Score MEDARA Geral</div>
             <div style="font-size:30px;font-weight:900;color:var(--dark);line-height:1;">68<span style="font-size:14px;font-weight:600;color:var(--medium);">/100</span></div>
           </div>
-          <div style="text-align:right;">
-            <div style="background:rgba(232,136,42,.12);border-radius:20px;padding:5px 14px;margin-bottom:4px;">
-              <span style="font-size:12px;font-weight:800;color:#E8882A;">⚠ ATENÇÃO</span>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="text-align:right;">
+              <div style="background:rgba(232,136,42,.12);border-radius:20px;padding:5px 14px;margin-bottom:4px;">
+                <span style="font-size:12px;font-weight:800;color:#E8882A;">⚠ ATENÇÃO</span>
+              </div>
+              <div style="font-size:10px;color:var(--medium);">↓ −2 pts vs mai/26</div>
             </div>
-            <div style="font-size:10px;color:var(--medium);">↓ −2 pts vs mai/26</div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--light)" stroke-width="2" style="width:18px;height:18px;flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>
           </div>
         </div>
         <div style="background:rgba(0,0,0,.07);border-radius:8px;height:9px;overflow:hidden;">
@@ -2359,7 +2359,6 @@ body{background:#030d1a !important;}
           </div>
           <div style="font-size:13px;font-weight:700;color:var(--dark);">Painel Executivo</div>
           <div style="font-size:10px;color:var(--medium);margin-top:2px;">10 KPIs · custo · ROI</div>
-          <div style="font-size:10px;color:var(--blue);font-weight:600;margin-top:7px;">Ver detalhes →</div>
         </div>
 
         <div onclick="goTo('s-afastamentos')" class="exec-module-card" style="border-color:rgba(232,136,42,.2);">
@@ -2368,7 +2367,6 @@ body{background:#030d1a !important;}
           </div>
           <div style="font-size:13px;font-weight:700;color:var(--dark);">Absenteísmo</div>
           <div style="font-size:10px;color:var(--medium);margin-top:2px;">4,2% · ↑ vs meta 3,5%</div>
-          <div style="font-size:10px;color:#E8882A;font-weight:600;margin-top:7px;">Ver análise →</div>
         </div>
 
         <div onclick="goTabGestor(1)" class="exec-module-card" style="border-color:rgba(229,57,53,.18);">
@@ -2377,7 +2375,6 @@ body{background:#030d1a !important;}
           </div>
           <div style="font-size:13px;font-weight:700;color:var(--dark);">SST & ASO</div>
           <div style="font-size:10px;color:var(--medium);margin-top:2px;"><span style="color:var(--danger);font-weight:700;">7 ASOs vencidos</span></div>
-          <div style="font-size:10px;color:var(--danger);font-weight:600;margin-top:7px;">Ver pendências →</div>
         </div>
 
         <div onclick="goTo('s-esocial')" class="exec-module-card" style="border-color:rgba(124,58,237,.15);">
@@ -2386,7 +2383,6 @@ body{background:#030d1a !important;}
           </div>
           <div style="font-size:13px;font-weight:700;color:var(--dark);">eSocial</div>
           <div style="font-size:10px;color:var(--medium);margin-top:2px;"><span style="color:#7C3AED;font-weight:700;">8 eventos pendentes</span></div>
-          <div style="font-size:10px;color:#7C3AED;font-weight:600;margin-top:7px;">Ver eventos →</div>
         </div>
 
         <div onclick="goTo('s-saude-emocional')" class="exec-module-card" style="border-color:rgba(236,72,153,.15);">
@@ -2395,7 +2391,6 @@ body{background:#030d1a !important;}
           </div>
           <div style="font-size:13px;font-weight:700;color:var(--dark);">Saúde Emocional</div>
           <div style="font-size:10px;color:var(--medium);margin-top:2px;">Índice geral: 76/100</div>
-          <div style="font-size:10px;color:#EC4899;font-weight:600;margin-top:7px;">Ver setores →</div>
         </div>
 
         <div onclick="goTo('s-risco-trabalhista')" class="exec-module-card" style="border-color:rgba(229,57,53,.2);">
@@ -2404,7 +2399,6 @@ body{background:#030d1a !important;}
           </div>
           <div style="font-size:13px;font-weight:700;color:var(--dark);">Risco Trabalhista</div>
           <div style="font-size:10px;color:var(--medium);margin-top:2px;">Score 62 · <span style="color:#E8882A;font-weight:700;">MÉDIO</span></div>
-          <div style="font-size:10px;color:var(--danger);font-weight:600;margin-top:7px;">Ver score →</div>
         </div>
 
         <div onclick="goTo('s-afastamentos')" class="exec-module-card" style="border-color:rgba(232,136,42,.18);">
@@ -2413,7 +2407,6 @@ body{background:#030d1a !important;}
           </div>
           <div style="font-size:13px;font-weight:700;color:var(--dark);">Afastamentos</div>
           <div style="font-size:10px;color:var(--medium);margin-top:2px;">3 ativos · R$ 18.400/mês</div>
-          <div style="font-size:10px;color:#E8882A;font-weight:600;margin-top:7px;">Gerenciar →</div>
         </div>
 
         <div onclick="goTo('s-relatorios')" class="exec-module-card" style="border-color:rgba(34,168,104,.15);">
@@ -2422,37 +2415,19 @@ body{background:#030d1a !important;}
           </div>
           <div style="font-size:13px;font-weight:700;color:var(--dark);">Relatórios</div>
           <div style="font-size:10px;color:var(--medium);margin-top:2px;">8 tipos · PDF & Excel</div>
-          <div style="font-size:10px;color:var(--success);font-weight:600;margin-top:7px;">Gerar →</div>
         </div>
-      </div>
-
-      <!-- Score completo CTA -->
-      <div onclick="goTo('s-score-medara')" style="background:linear-gradient(135deg,#061528,#0B1F4A,#0f2d5c);border-radius:16px;padding:16px 20px;margin-bottom:12px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
-        <div>
-          <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:.6px;text-transform:uppercase;margin-bottom:4px;">Score MEDARA · 6 Dimensões</div>
-          <div style="display:flex;align-items:baseline;gap:5px;">
-            <span style="font-size:26px;font-weight:900;color:#FFC107;">68</span>
-            <span style="font-size:13px;color:rgba(255,255,255,.5);">/100</span>
-            <span style="font-size:11px;color:#FFC107;font-weight:600;margin-left:4px;">⚠ ATENÇÃO</span>
-          </div>
-          <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:3px;">"Transformar dados em decisões preventivas"</div>
-        </div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2" style="width:20px;height:20px;flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>
       </div>
 
       <!-- Backup -->
-      <div style="background:#fff;border-radius:16px;padding:15px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:4px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-          <div style="width:34px;height:34px;background:rgba(34,168,104,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" style="width:16px;height:16px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          </div>
-          <div style="flex:1;">
-            <div style="font-size:13px;font-weight:700;color:var(--dark);">Backup do Banco</div>
-            <div style="font-size:11px;color:var(--medium);">Automático às 22:00 · Retenção 30 dias</div>
-          </div>
-          <span style="background:rgba(34,168,104,.12);color:var(--success);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;">OK</span>
+      <div style="background:#fff;border-radius:16px;padding:12px 15px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:4px;display:flex;align-items:center;gap:10px;">
+        <div style="width:34px;height:34px;background:rgba(34,168,104,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" style="width:16px;height:16px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         </div>
-        <button id="backup-btn" onclick="fazerBackup()" style="width:100%;background:linear-gradient(135deg,var(--success),#18a060);color:#fff;border:none;border-radius:12px;padding:12px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">Fazer Backup Agora</button>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:13px;font-weight:700;color:var(--dark);">Backup do Banco <span style="background:rgba(34,168,104,.12);color:var(--success);font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;vertical-align:1px;margin-left:4px;">OK</span></div>
+          <div style="font-size:11px;color:var(--medium);">Automático às 22:00 · Retenção 30 dias</div>
+        </div>
+        <button id="backup-btn" onclick="fazerBackup()" style="background:transparent;border:1.5px solid var(--success);color:var(--success);border-radius:10px;padding:8px 14px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;">Fazer agora</button>
       </div>
     </div>
     <nav class="bnav">
@@ -2481,9 +2456,9 @@ body{background:#030d1a !important;}
       </div>
     </div>
     <div class="scroll-area" style="padding:14px 18px 0;">
-      <div style="background:rgba(61,130,216,.07);border:1px solid rgba(61,130,216,.16);border-radius:12px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span style="font-size:11px;color:var(--blue);font-weight:500;">Dados anonimizados · Conformidade LGPD & NR-07</span>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;opacity:.75;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--light)" stroke-width="2" style="width:11px;height:11px;flex-shrink:0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span style="font-size:10px;color:var(--light);font-weight:500;">Dados anonimizados · LGPD & NR-07</span>
       </div>
 
       <!-- ASO -->
