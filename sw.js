@@ -1,4 +1,4 @@
-const CACHE = 'medara-v11';
+const CACHE = 'medara-v12';
 const STATIC = ['/coracao.png', '/letras.png', '/medara-logo.jpg', '/icons/icon-192.png', '/icons/icon-512.png', '/manifest.json'];
 const HTML   = ['/', '/index.html'];
 
